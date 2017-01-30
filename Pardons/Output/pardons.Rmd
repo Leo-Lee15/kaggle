@@ -1,0 +1,393 @@
+---
+title: "Visualizing Presidential Pardons Over The Years"
+author: "Caio Lente"
+date: "2017-01-20"
+output: 
+  html_document: 
+    fig_height: 7
+    fig_width: 10
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The goal of this visualization is to explore the Presidential Pardons dataset. It is devided into four sections: **load**, **clean**, **transform**, and **analyze**.
+
+The last part is the most important. Each of its sub-topics is a question that I attempt to answer with a visualization. Even though there wasn't a rigorous thought process behind the questions I chose, they express the things I wanted to know when I first opened the dataset; one question lead naturally into another as a result of plain simple and curiosity (which is in my opinion the best way to go about an EDA).
+
+## Load
+
+Here I load the required packages for the analysis. Nothing fancy, just enough so we can manipulate and visualize the data properly.
+
+I also read the two files containing the dataset.
+
+```{r, message = FALSE}
+# Load packages
+library(tidyverse)
+library(stringr)
+library(ggplot2)
+library(forcats)
+    
+# Read the data
+part_one <- read_csv("Pardons/presidents_one.csv")
+part_two <- read_csv("Pardons/presidents_two.csv")
+```
+
+## Clean
+
+Despite not being necessary, I consider tidying up variable names a very important step. This allows us to have a consistent way of referring to columns, and to avoid the necessity of \`backticks\` alongside those references.
+
+First I convert the names to snake case, and then deal with special characters.
+
+```{r}
+# Convert column names to snake case
+names(part_one) <- str_replace_all(str_to_lower(names(part_one)), " ", "_")
+names(part_two) <- str_replace_all(str_to_lower(names(part_two)), " ", "_")
+
+# Remove parentheses from the column names
+names(part_two) <- str_replace_all(names(part_two), "\\)", "")
+names(part_two) <- str_replace_all(names(part_two), "\\(", "")
+```
+
+After making the dataset's metadata consistent, I usually check the consistency of the dada itself. The values seemed to be fine, but there were too many NAs so I would have to deal with them in some way or another.
+
+I'm not going to show you all the tests I ran to come to this conclusion because this would veer us off course, suffice to show what made me come to the conclusion that it wouldn't be a problem to replace NAs with 0s:
+  
+  * We can't remove or treat rows with NAs differently because every row has at least one NA
+  
+  * NAs in certain variables seem to be related with non-NAs in other variables (take a look at columns 13/14 and columns 15/16 in `part_two`; since I intended in adding these four columns anyway, it wouldn't be an problem to replace the NAs with 0s)
+  
+  * I'm throwing out types of granted petitions (pardons, commutations, etc.), so NAs in these variables don't matter
+  
+  * As you'll see in the first part of the **analyze** section, if we replace NAs with 0s the math of leftover petitions still adds up pretty nicely
+
+```{r}
+# Replace NAs with 0s
+part_one[is.na(part_one)] <- 0
+part_two[is.na(part_two)] <- 0
+```
+
+## Transform
+
+Now that the tables were clean, it was time to transform them. Here I have to shape the data in a way as to make analysis as easy as possible.
+
+In the case of this dataset, one thing was very clear: I had to join the two tables into one. I also decided to drop the columns related to types of granted petitions because they didn't have a lot of information that I (in the case of this particular analysis) couldn't get from `petitions_granted`.
+
+This was the layout of the variables in `pardons` that I could calculate straight from `part_one` and `part_two`:
+
+| Variable | Description |
+|---------------------|-------------------------------------------------------------------------------------|
+| president | Name of the president |
+| fiscal\_year | Year |
+| petitions\_pending | Number of petitions that were already pending at the beginning of the year |
+| petitions\_received | Number of petitions that were filed during that year |
+| petitions\_available | Number of petitions available at that year (`petitions_pending` + `petitions_received`) |
+| petitions\_granted | Number of petitions granted by the president |
+| petitions\_denied | Number of petitions denied by the president |
+| petitions\_blocked | Number of petitions closed or denied without interference from the president |
+
+I'm going to omit the code that created these variables, selected the relevant columns, and binded the two tables but in the end this was the structure of the table:
+
+```{r, echo = FALSE, warning = FALSE}
+# Transform part_one so it fits nicely with part_two
+part_one <- part_one %>%
+  mutate(
+    petitions_available = petitions_pending + petitions_received,
+    petitions_blocked = petitions_closed_without_presidential_action + 
+      petitions_denied_or_closed_without_presidential_action
+  ) %>%
+  select(
+    president,
+    fiscal_year,
+    petitions_pending,
+    petitions_received,
+    petitions_available,
+    petitions_granted,
+    petitions_denied,
+    petitions_blocked
+  )
+
+# Transform part_two so it fits nicely with part_one
+part_two <- part_two %>%
+  mutate(
+    petitions_denied = petitions_denied_pardons + petitions_denied_commutations,
+    petitions_pending = petitions_pending_pardons + petitions_pending_commutations,
+    petitions_received = petitions_received_pardons + petitions_received_commutations,
+    petitions_available = petitions_pending_pardons + petitions_pending_commutations +
+      petitions_received_pardons + petitions_received_commutations,
+    petitions_blocked = petitions_closed_without_presidential_action_pardons + 
+      petitions_closed_without_presidential_action_commutations + 
+      petitions_denied_or_closed_without_presidential_action_pardons + 
+      petitions_denied_or_closed_without_presidential_action_commutations
+  ) %>%
+  select(
+    president,
+    fiscal_year,
+    petitions_pending,
+    petitions_received,
+    petitions_available,
+    petitions_granted,
+    petitions_denied,
+    petitions_blocked
+  )
+  
+# Bind the two tables
+pardons <- rbind(part_one, part_two)
+```
+
+```{r}
+# Show structure of pardons
+str(pardons)
+```
+
+After obtaining the consolidated table it's necessary to create an ID for the presidents. With this ID I can sort the table by president and year without worrying about alphabetical order (two presidents might have entries with the same year and we wouldn't want ties to be broken with name order).
+
+This is the last variable I'll add to the data.
+
+```{r, message = FALSE}
+# Create president IDs 
+pardons <- pardons %>%
+  arrange(fiscal_year) %>%
+  distinct(president) %>%
+  mutate(
+    id = 1:20
+  ) %>%
+  right_join(pardons) %>%
+  select(id, 1, 3:9)
+```
+
+The final step of the **transform** section is creating a tidy version of the `pardons` table. I mean "tidy" in the sense that Wickham means it in [Tidy Data](http://vita.had.co.nz/papers/tidy-data.pdf).
+
+```{r}
+# Tidy version of pardons
+tidy_pardons <- pardons %>%
+  gather("type", "count", 4:9)
+```
+
+## Analyze
+
+After preparing the data, we're left with the analysis phase. Here I'll propose some questions and attempt to answer them with visualizations of the data.
+
+If you have other questions that you think would be interesting to answer, please leave a message below! I tried to think of fun things to get out of this dataset, but I'm sure there is still a lot more stuff I could do. :)
+
+### Was replacing NAs with 0s a good decision?
+
+The first question doesn't really tell us anything about the data, it just validates a decision I took in the **clean** section. That decision allowed us to create a very consistent dataset, but did it create too many "ghost" petitions (petitions that go missing or simply show up out of nowhere between two fiscal years)?
+
+To evaluate how many ghost petitions there are, I'm going to create a variable called `petitions_missing` calculated from how many petitions there are pending in year $n + 1$ and how many petitions were left pending in year $n$.
+
+```{r, warning = FALSE, message = FALSE}
+# Check distribution of ghost petitions
+pardons %>%
+  arrange(id, fiscal_year) %>%
+  mutate(
+    petitions_missing = lead(petitions_pending) -
+      (petitions_available - petitions_granted -
+      petitions_denied - petitions_blocked)
+  ) %>%
+  gather("type", "count", 4:10) %>%
+  filter(type == "petitions_missing") %>%
+  ggplot(aes(x = count)) +
+    geom_histogram() +
+    theme_bw()
+```
+
+The median of `petitions_missing` is zero and there are few other values. This is a very strong indication that removing the NAs wasn't a problem.
+
+### How is the distribution of each petition type?
+
+For the lack of a better name, I call "type" the set of different `petitions_*` variables; I went with "type" because there were *granted* petitions, *available* petitions, etc. By understanding the distributions of types we might understand a little more of the petition process.
+
+Note that `petitions_available` is simply `petitions_pending` + `petitions_received`. Also note that I'm ommiting outliers because there were way too many, and insted I'm showing all of the points so that we can see where they are concentrated.
+
+```{r, echo = FALSE, warning = FALSE}
+# Create aggregate table sorted by median(count)
+ord <- tidy_pardons %>%
+  group_by(type) %>%
+  summarise(
+    m = median(count, na.rm = TRUE)
+  ) %>%
+  arrange(m)
+
+# Reorder factors according to median(count)
+tidy_pardons$type <- factor(tidy_pardons$type, ord$type)
+```
+
+```{r}
+# Create box-plots of petitions
+tidy_pardons %>%
+  ggplot(aes(type, count)) + 
+    geom_boxplot(outlier.color = NA) +
+    geom_jitter(alpha = 0.3, width = 0.15) +
+    theme_bw()
+```
+
+With these six box-plots we can see some interesting patterns:
+
+  * Event though `petitions_denied` has a higher ceiling, `petitions_granted` has a higher median
+  
+  * Despite `petitions_available` being concentrated arount the $1200$ line, there are some very strong outliers
+  
+  * There are a lot of blocked petitions, even more than there are granted
+
+### How does `petitions_blocked`/`petitions_available` change over time?
+
+Due to the last bullet point of the previous answer, I decided to take a closer look at `petitions_blocked` to see if I could find any interesting patters. Since blocked petitions happen by definition without presidential interference, it reveals trends less related to the president in charge.
+
+Given that absolute numbers won't give us a fair assessment of any trend, I'm using the ratio between blocked petitions and available petitions.
+
+```{r, warning = FALSE}
+# Scatterplot petitions_blocked/petitions_available
+pardons %>%
+  mutate(
+    petitions_responded = petitions_denied + petitions_granted,
+    responded_by_available = petitions_responded/petitions_available,
+    blocked_by_available = petitions_blocked/petitions_available,
+    president = factor(president, president[order(fiscal_year, decreasing = TRUE)])
+  ) %>%
+  filter(blocked_by_available != Inf) %>%
+  ggplot(aes(fiscal_year, blocked_by_available)) +
+    geom_point(aes(color = president)) + 
+    theme_bw()
+```
+
+There is a very clear downward trend in this data. Apparently it seems that a smaller and smaller fraction of petitions are being closed or denied without presidential interference.
+
+### Who left the most pending petitions for their successors?
+
+And speaking of trends in the time series, an interesting number to look at would be how many petitions a given president left for their successor after their last year in office.
+
+To analyze this I select the last row of each president in the dataset and calculate how many peding petitions are being left (not taking into account `petitions_missing`).
+
+```{r}
+# Analyze petitions left for successor
+pardons %>%
+  group_by(id) %>%
+  filter(fiscal_year == max(fiscal_year)) %>%
+  ungroup() %>%
+  mutate(
+    petitions_left = petitions_pending + petitions_received -
+      petitions_granted - petitions_denied - petitions_blocked,
+    president = paste0(president, " (", fiscal_year, ")"),
+    president = factor(president, president[order(petitions_left, decreasing = TRUE)])
+  ) %>%
+  ggplot(aes(president, petitions_left)) +
+    geom_bar(stat = "identity") +
+    coord_flip() + 
+    theme_bw()
+```
+
+Not much to say here except wish good luck to Mr. Trump.
+
+### Can we detect patterns for the time series?{.tabset}
+
+Motivated by the new president and his (as we've just found out) 15k+ peding petitions, I then decided to look for other patterns in the time series.
+
+The first tab below shows the time series of pending petitions, received petitions, and available petitions. The second one shows denied petitions, granted petitions, and blocked petitions.
+
+I also fitted a `geom_smooth` over the points so trends were easier to see.
+
+#### Pending, received, and available petitions
+```{r, warning = FALSE, message = FALSE}
+# Show time series of pending petitions, received petitions, and available petitions
+tidy_pardons %>%
+  filter(type %in% c("petitions_pending", "petitions_received", "petitions_available")) %>%
+  mutate(
+    president = factor(president, president[order(fiscal_year, decreasing = TRUE)])
+  ) %>%
+  ggplot(aes(fiscal_year, count)) +
+    geom_point(aes(color = president), alpha = 0.5) +
+    geom_smooth() +
+    facet_wrap(~ type) +
+    theme_bw()
+```
+
+Recently there have been *way* more petitions received than in the last 100 years, and probably as a consequence the number of petitions left pending is also really high. Since petitions available is the sum of the other two variables, it is rising too.
+
+#### Denied, granted, and blocked petitions
+```{r, warning = FALSE, message = FALSE}
+# Show time series of denied petitions, granted petitions, and blocked petitions
+tidy_pardons %>%
+  filter(type %in% c("petitions_denied", "petitions_granted", "petitions_blocked")) %>%
+  mutate(
+    president = factor(president, president[order(fiscal_year, decreasing = TRUE)])
+  ) %>%
+  ggplot(aes(fiscal_year, count)) +
+    geom_point(aes(color = president), alpha = 0.5) +
+    geom_smooth() +
+    facet_wrap(~ type) +
+    theme_bw()
+```
+
+The number of petitions granted throughout the years hasn't changed much, and (as it was shown earliear) the number of blocked petitions follows the trend of available petitions in a way that makes their ratio decline almost linearly. The number of denied petitions seems to be following a trend very similar to the time series of the "Pending, received, and available" tab.
+
+### Can we predict the number of petitions that will be received next year based on the number of petitions granted this year?
+
+As was plain to see in the last visualization, the number of petitions filed has been going up by a lot. Since the number of granted petitions has also been going up (even though in a much smaller scale), could this be a pattern? In other words, if a president grants a lot of petitions in one year, are there going to be more petitions being filed in the next year?
+
+```{r, warning = FALSE}
+# Visualize petitions received in one year as a function of petitions granted in the previous year
+pardons %>%
+  arrange(id, fiscal_year) %>%
+  mutate(
+    next_received = lead(petitions_received)
+  ) %>%
+  ggplot(aes(petitions_granted, next_received)) +
+    geom_point() +
+    theme_bw()
+```
+
+Unfortunatelly there doesn't seem to be any pattern here. Unless we make a statistical model, we probably can't predict next year's `petitions_received` with this year's `petitions_granted`.
+
+### Why is Obama receiving so many petitions?{.tabset}
+
+So why then is Obama receiving so many petitions? The amount of received petitions was already in an upward trend, but during his presidency this number has skyrocketed.
+
+I wasn't able to find any relevant global pattern while answering the last question, but there might be something *specific* about Obama's precidency that triggered this sudden rise in `petitions_received`.
+
+To answer this I'm going to plot the `petitions_received` time series with and without Obama's terms. I'm also going to fit a `geom_smooth` over the data so that we can visualize the trend.
+
+#### Petitions granted (without Obama)
+```{r, warning = FALSE, message = FALSE}
+# Show trend of granted petitions without Obama's terms
+tidy_pardons %>%
+  filter(type == "petitions_granted", fiscal_year < 2013) %>%
+  mutate(
+    president = factor(president, president[order(fiscal_year, decreasing = TRUE)])
+  ) %>%
+  ggplot(aes(fiscal_year, count)) +
+    geom_point(aes(color = president)) +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~ type) +
+    theme_bw()
+```
+
+Here we can clearly see that the number of petitions granted was going down...
+
+#### Petitions granted (with Obama)
+```{r, warning = FALSE, message = FALSE}
+# Show trend of granted petitions with Obama's terms
+tidy_pardons %>%
+  filter(type == "petitions_granted") %>%
+  mutate(
+    president = factor(president, president[order(fiscal_year, decreasing = TRUE)])
+  ) %>%
+  ggplot(aes(fiscal_year, count)) +
+    geom_point(aes(color = president)) +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~ type) +
+    theme_bw()
+```
+
+... and here we can see how much Obama breaks this trend.
+
+So this might be why: Obama hasn't been the president who's granted the most petitions, but he has granted way more petitions than his close predecessors. People who had previously never hoped to have their petitions granted were now seing the trend reverse, and thus decided to file their petitions.
+
+
+
+
+
