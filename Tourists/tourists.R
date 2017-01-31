@@ -63,9 +63,21 @@ tourists_filled <- tourists %>%
 
 # Create plot of visits to 'State' over time
 tourists_filled %>%
-  group_by(State, Year, Month) %>%
-  ggplot(aes(Year, Tot, color = State)) +
+  group_by(State) %>%
+  arrange(Year, Month) %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Tot, color = State)) +
     geom_smooth(se = FALSE) +
+    theme_minimal()
+
+# Create plot of total visits over time
+tourists_filled %>%
+  group_by(Year, Month) %>%
+  summarise(Tot = sum(Tot)) %>%
+  ungroup() %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Tot, color = Month)) +
+    geom_point() +
     theme_minimal()
 
 # tourists %>%
