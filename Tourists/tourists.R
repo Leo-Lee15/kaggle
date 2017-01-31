@@ -32,6 +32,12 @@ clean_state <- function(State) {
     iconv(from = "latin1", to = "UTF-8")
 }
 
+# Fill gaps in time series of a State with moving average
+fill_tot <- function(X) {
+  X$Tot <- na.ma(X$Tot)
+  X
+}
+
 
 
 # CODE ------------------------------------------------------------------------
@@ -46,36 +52,27 @@ tourists <- tourists %>%
     State = clean_state(State)
   )
 
-# Create variable with total visits to 'State' over time
-tourists %>%
+# Fill gaps in 'Tot' column for all states
+tourists_filled <- tourists %>%
   group_by(State, Year, Month) %>%
   summarise(Tot = sum(Count)) %>%
+  group_by(State, Month) %>%
+  nest() %>%
+  mutate(data = map(data, fill_tot)) %>%
+  unnest(data)
+
+# Create plot of visits to 'State' over time
+tourists_filled %>%
+  group_by(State, Year, Month) %>%
   ggplot(aes(Year, Tot, color = State)) +
-    geom_smooth(se = FALSE)
+    geom_smooth(se = FALSE) +
+    theme_minimal()
 
-s <- tourists %>%
-  filter(State == "São Paulo") %>%
-  group_by(Year, Month) %>%
-  arrange(Year, Month) %>%
-  summarise(Tot = sum(Count)) %>%
-  ungroup() %>%
-  mutate(Time = row_number())
-
-s %>%
-  ggplot(aes(Time, Tot)) +
-    geom_point() +
-    geom_smooth(se = FALSE)
-
-s %>%
-  group_by(Month) %>%
-  arrange(Time) %>%
-  mutate(Tot = na.ma(Tot)) %>%
-  ungroup() %>%
-  ggplot(aes(Time, Tot)) +
-    geom_point() +
-    geom_smooth(se = FALSE)
-
-
+# tourists %>%
+#   group_by(State, Year, Month) %>%
+#   summarise(Tot = sum(Count)) %>%
+#   ggplot(aes(Year, Tot, color = State)) +
+#   geom_smooth(se = FALSE)
 
 
 
