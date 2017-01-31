@@ -33,6 +33,12 @@ clean_state <- function(State) {
     iconv(from = "latin1", to = "UTF-8")
 }
 
+# Fill count of tourists with moving average
+fill_tot <- function(X) {
+  X$Tot <- na.ma(X$Tot)
+  X
+}
+
 
 
 # CODE ------------------------------------------------------------------------
@@ -53,10 +59,10 @@ tourists_filled <- tourists %>%
   summarise(Tot = sum(Count)) %>%
   group_by(State, Month) %>%
   nest() %>%
-  mutate(data = map(data, ~na.ma(.x$Tot))) %>%
+  mutate(data = map(data, fill_tot)) %>%
   unnest(data)
 
-# Create plot of visits to 'State' over time
+# Plot visits to 'State' over time
 tourists_filled %>%
   group_by(State) %>%
   arrange(Year, Month) %>%
@@ -65,7 +71,7 @@ tourists_filled %>%
     geom_smooth(se = FALSE) +
     theme_minimal()
 
-# Create plot of total visits over time
+# Plot total visits over time (by month)
 tourists_filled %>%
   group_by(Year, Month) %>%
   summarise(Tot = sum(Tot)) %>%
@@ -74,6 +80,16 @@ tourists_filled %>%
   ggplot(aes(Time, Tot, color = Month)) +
     geom_point() +
     theme_minimal()
+
+# Plot time series
+tourists_filled %>%
+  group_by(Year, Month) %>%
+  summarise(Tot = sum(Tot)) %>%
+  ungroup() %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Tot)) +
+  geom_line() +
+  theme_minimal()
 
 # Create table with time series only
 tourists_ts <- tourists_filled %>%
@@ -84,8 +100,20 @@ tourists_ts <- tourists_filled %>%
 # Forecast next five months of the time series with ARIMA
 ts <- ts(tourists_ts$Tot, start = c(1989, 1), end = c(2015, 12), frequency = 12)
 fit <- Arima(ts, order = c(1, 0, 12))
-forecast(fit, 5)
 
+# Plot predictions
+tourists_ts %>%
+  bind_rows(
+    tibble(
+      Year = rep(2016, 6),
+      Month = c("jan", "fev", "mar", "apr", "mai", "jun"),
+      Tot = forecast(fit, 6)$mean[1:6]
+    )
+  ) %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Tot)) +
+  geom_line() +
+  theme_minimal()
 
 
 
