@@ -1,0 +1,253 @@
+---
+title: "Time Series Forecasting Workflow"
+author: "Caio Lente"
+date: "2017-01-31"
+output: 
+  html_document: 
+    fig_height: 7
+    fig_width: 10
+---
+
+This is a very barebones introduction to time series forecasting. I'll go through visualizing patterns in the data, inputting missing values, and finally running some forecasting algorithms.
+
+As an example I'll use the "Tourists Visiting Brazil" dataset sourced by Luiza Fontana from the [Brazilian Open Data Portal](http://dados.gov.br/dataset/chegada-turistas). The data will be stored in a table called `tourists`; its first 10 rows are shown here below
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(stringr)
+library(ggplot2)
+library(imputeTS)
+library(forecast)
+
+# Read data
+tourists <- read_csv("Data/touristData.csv")
+```
+
+```{r, echo=FALSE}
+knitr::kable(head(tourists, 10))
+```
+
+## Cleaning the dataset
+
+Before we begin the analysis we're going to have to clean the data up a bit. Like any dataset, `tourists` has some problems that we have to deal with before moving forward (or moving anywhere at all).
+
+First of all, neither the months nor the states are in UTF-8 encoding. Take a look at these state names for instance
+
+```{r, echo=FALSE}
+unique(tourists$State)[c(4, 5, 9, 10)]
+```
+
+The second problem is `Month`'s factor levels; they are ordered alphabetically, and that is going to be a big problem when we try to order the data by date. Here is how they are organized now
+
+```{r, echo=FALSE}
+levels(factor(tourists$Month))
+```
+
+The last problem isn't really a problem, but I want to fix it anyway... The names of the months are too long. While I fix the two main problems I'll also sort this out.
+
+After identifying the problematic variables, I usually create a function to fix each one's problems. Here we're going to have two functions: `clean_month` and `clean_state`
+
+```{r}
+# Clean 'Month'
+clean_month <- function(Month) {
+  
+  # Create factor levels
+  month_levels <- c(
+    "jan", "fev", "mar", "abr", "mai", "jun",
+    "jul", "ago", "set", "out", "nov", "dez"
+  )
+  
+  # Change encoding, trim names and apply factor levels
+  Month %>%
+    iconv(from = "latin1", to = "UTF-8") %>%
+    str_sub(1, 3) %>%
+    factor(levels = month_levels)
+}
+
+# Clean 'State'
+clean_state <- function(State) {
+  
+  # Change encoding
+  State %>%
+    iconv(from = "latin1", to = "UTF-8")
+}
+```
+
+```{r, echo=FALSE, warning=FALSE}
+tourists <- tourists %>%
+  mutate(
+    Month = clean_month(Month),
+    State = clean_state(State)
+  )
+```
+
+After applying these two functions, we can see how the names of the states I've shown you before should actually look like
+
+```{r, echo=FALSE}
+unique(tourists$State)[c(4, 5, 9, 10)]
+```
+
+And these are the new factor levels of `Month` (also note how the month names are only three letters long now)
+
+```{r, echo=FALSE}
+levels(factor(tourists$Month))
+```
+
+## Visualizing the data
+
+Now that we're satisfied with the format our variables, we can move on the the visualization step. Here we'll try to find interesting patterns we can do something with.
+
+The most intuitive first step is taking a look at the time series of visits per month. Since I don't expect to get much information out of `Continent`, `Country`, and `WayIn` (because these might be too sensitive to things like discounts on ticket fares and the like), I feel like plotting the aggregate time series is a good choice.
+
+```{r, echo=FALSE}
+tourists %>%
+  group_by(Year, Month) %>%
+  summarise(Count = sum(Count)) %>%
+  ungroup() %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Count)) +
+    geom_line() +
+    theme_minimal() +
+    labs(
+      x = "Time in months since Jan 1989",
+      y = "Number of travelers visiting Brazil"
+    )
+```
+
+And here we can see the worst thing about time series... Missings data. We're probably not going to be able to run any analysis on this dataset as long as we have that many holes in the time series. So let's fix this!
+
+So how can we find out a way to input the missing data? To figure this out we have to visualize the dataset form other angles... How about inputting the data state by state?
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+tourists %>%
+  filter(State == "São Paulo") %>%
+  group_by(Year, Month) %>%
+  summarise(Count = sum(Count)) %>%
+  ungroup() %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Count)) +
+    geom_point(alpha = 0.3) +
+    geom_smooth(se = FALSE) +
+    theme_minimal() +
+    labs(
+      x = "Time in months since Jan 1989",
+      y = "Number of travelers visiting the state of São Paulo"
+    )
+```
+
+By looking at this plot I don't feel like inputting the missing values by state is going to be a good choice. Despite there being an underlying trend in the number of visits over time, the points are too scattered so I don't think we'll be able to guess a missing value just by looking at the data surrounding it.
+
+But if we take go back and take a look at the full time series, we can see that there are seasonal trends in the data. How about we take a look at those? Let's break down the plot above and see just one month
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+tourists %>%
+  filter(Month == "jun", State == "São Paulo") %>%
+  group_by(Year, Month) %>%
+  summarise(Count = sum(Count)) %>%
+  ungroup() %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Count)) +
+    geom_point(alpha = 0.3) +
+    geom_smooth(se = FALSE) +
+    theme_minimal() +
+    labs(
+      x = "Junes since 1989",
+      y = "Number of travelers visiting the state of São Paulo"
+    )
+```
+
+Now this seems much more promising. Despite the outlier on the far right (probably a result of the World Cup), the time series devided by month seems to be a better option for inputting missing data.
+
+Since our goal here is forecasting, our main objective for this step was finding a way to input missing data. There are certainly many more ways to look at this dataset, but for now we'll move on.
+
+## Filling in the gaps
+
+Since the time series divided up by months is so neat, I'm not going to do anything fancy here. I'm going to group the dataset by month and apply a simple moving average function from the `imputeTS` package.
+
+The whole code looks like this
+
+```{r, message=FALSE}
+# Fill count of tourists with moving average
+fill_count <- function(X) {
+  X$Count <- na.ma(X$Count)
+  X
+}
+
+# Fill gaps in 'Count' column by 'Month' and 'State'
+tourists_filled <- tourists %>%
+  group_by(State, Year, Month) %>%
+  summarise(Count = sum(Count)) %>%
+  group_by(State, Month) %>%
+  nest() %>%
+  mutate(data = map(data, fill_count)) %>%
+  unnest(data)
+```
+
+All of the action happens in the `mutate(data = map(data, fill_count))` statement. With `purrr::map` we send the data for each month of each state to the `fill_count` function, where we input the missing values with `imputeTS::na.ma`.
+
+Now let's take a look at the full time series after filling in the gaps
+
+```{r, echo=FALSE}
+tourists_filled %>%
+  group_by(Year, Month) %>%
+  summarise(Count = sum(Count)) %>%
+  ungroup() %>%
+  mutate(Time = row_number()) %>%
+  ggplot(aes(Time, Count)) +
+    geom_line() +
+    theme_minimal()
+```
+
+That looks way better!
+
+## Forecasting
+
+Unfortunately the main part of this tiny tutorial happens in the blink of an eye. This goes to show that 90% of data science is wrangling with the data.
+
+The whole code for the prediction is shown below
+
+```{r, message=FALSE}
+# Create table with time series only
+tourists_ts <- tourists_filled %>%
+  group_by(Year, Month) %>%
+  summarise(Count = sum(Count)) %>%
+  ungroup()
+
+# Forecast next five months of the time series with ARIMA
+ts <- ts(tourists_ts$Count, c(1989, 1), c(2015, 12), 12)
+fit <- Arima(ts, order = c(1, 0, 12))
+```
+
+The first step is keeping only the time information on the dataset (this is `tourists_ts`). Then, with `ts` we convert the vector of counts into a time series; its arguments are the vector, the begin date (January of 1989), the end date (December of 2015) and the number of observations per year (twelve).
+
+The last line fits an ARIMA model to the data. If you want to know more about this method, I highly recommend you do; it is a very interesting technique that involves regressions on lags of the response varibale and other interesting tricks. The `order` parameter means that we are describing `Count` by combining a first order Auto-Regressive model and a twelfth order Moving Average model.
+
+Now lets see what the forecast for the next 6 months looks like
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tourists_ts %>%
+  bind_rows(tibble(
+    Year = rep(2016, 6),
+    Month = c("jan", "fev", "mar", "apr", "mai", "jun"),
+    Count = forecast(fit, 6)$mean[1:6]
+  )) %>%
+  mutate(
+    Time = row_number(),
+    Color = ifelse(Year == 2016, "red", "black")
+  ) %>%
+  ggplot(aes(Time, Count, color = Color)) +
+    scale_colour_manual(values = c("black", "red")) +
+    geom_line() +
+    theme_minimal() +
+    labs(
+      x = "Time in months since Jan 1989",
+      y = "Number of travelers visiting Brazil"
+    ) +
+    theme(legend.position = "none")
+```
+
+This prediction seems pretty reasonable. There was a big low in the year preceding the forecast, so that's probably why we got a new low.
+
+If we wanted to make our prediction even better we could try to add more variables to the model like noteworthy events (this would be relevant in our case because in 2016 the Olympics were held in Brazil), and economic data, but I'll leave this for another time.
+
+If you have any ideas just leave a message below!
