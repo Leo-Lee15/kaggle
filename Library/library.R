@@ -43,22 +43,21 @@ bay <- qmap("San Francisco, CA", zoom = 12, maptype = "watercolor")
 
 # Create GIF with the 14 years represented by the data
 saveGIF(for (i in 0:13) {
-  
+
   # Filter only one year of usage data
   dstr_usage_ <- dstr_usage %>%
     filter(
       year_patron_registered == 2003 + i
     )
-  
+
   # Merge outlines of districts and usage information
   geo_usage <- merge(points, dstr_usage_, by.x = 'id', by.y = 'supervisor_district', all.x = TRUE)
-  
+
   # Create the plot of the neighborhoods
   print(bay +
     geom_polygon(aes(x = long, y = lat, group = group, fill = mean_yearly_checkouts),
                  data = geo_usage, linetype = "dotted", color = "#0f0f0f", alpha = 0.55) +
     scale_fill_gradient(low = 'red', high = 'green', limits = c(10, 54)) +
     ggtitle(paste0("Average checkouts per person per year for patrons registered in ", 2003 + i)))
-  
-}, "checkouts.gif", interval = 0.5, ani.width = 1000, ani.height = 1000)
 
+}, "checkouts.gif", interval = 0.5, ani.width = 1000, ani.height = 1000)

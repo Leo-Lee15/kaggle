@@ -10,13 +10,13 @@ library(forecast)
 
 # Clean 'Month' variable of the 'tourists' dataset
 clean_month <- function(Month) {
-  
+
   # Create factor levels
   month_levels <- c(
     "jan", "fev", "mar", "abr", "mai", "jun",
     "jul", "ago", "set", "out", "nov", "dez"
   )
-  
+
   # Change encoding, trim names and apply factor levels
   Month %>%
     iconv(from = "latin1", to = "UTF-8") %>%
@@ -26,7 +26,7 @@ clean_month <- function(Month) {
 
 # Clean 'State' variable of the 'tourists' dataset
 clean_state <- function(State) {
-  
+
   # Change encoding
   State %>%
     iconv(from = "latin1", to = "UTF-8")
@@ -111,6 +111,3 @@ tourists_ts %>%
   ggplot(aes(Time, Count)) +
     geom_line() +
     theme_minimal()
-
-
-

@@ -34,14 +34,14 @@ deadly_cities <- us.cities %>%
   filter(count > 5)
 
 # Create base layer of the plot (continental US)
-plot_deaths <- ggplot() + 
-  geom_polygon(data = map_data("usa"), aes(long, lat, group = group), fill = "#e6e6e6") + 
+plot_deaths <- ggplot() +
+  geom_polygon(data = map_data("usa"), aes(long, lat, group = group), fill = "#e6e6e6") +
   theme(axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.line = element_blank(), axis.ticks = element_blank(),
         panel.background = element_blank(), panel.border = element_blank(),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        legend.position = "none") + 
+        legend.position = "none") +
   coord_quickmap()
 
 # Plot deaths and show major cities
@@ -58,11 +58,11 @@ plot_deaths +
 
 # Create GIF with the 730 days represented by the data
 saveGIF(for (i in 0:730) {
-  
+
   # Filter deaths up to a certain date
   time_deaths <- cont_deaths %>%
     filter(date <= ymd("2015-01-01") + i)
-  
+
   # Get the cities that have already had more than 5 deaths
   time_cities <- deadly_cities %>%
     left_join(time_deaths, c("city" = "city", "country.etc" = "state")) %>%
@@ -70,15 +70,14 @@ saveGIF(for (i in 0:730) {
     summarise(count = n(), long = long[1], lat = lat[1]) %>%
     ungroup() %>%
     mutate(alph = count > 5)
-  
+
   # Plot deaths
   print(plot_deaths +
-    geom_text_repel(data = time_cities, size = 4, segment.alpha = 0, 
+    geom_text_repel(data = time_cities, size = 4, segment.alpha = 0,
                     aes(long, lat, label = city, alpha = factor(alph))) +
     scale_alpha_manual(values = c(0, 1)) +
     geom_point(data = time_deaths, aes(longitude, latitude), alpha = 0.2, color = "red") +
     ggtitle(paste0("Deaths until ", ymd("2015-01-01") + i,
                    " (showing when each city crosses the 5 deaths line)")))
-  
-}, "deaths.gif", interval = 0.005, ani.width = 700, ani.height = 490)
 
+}, "deaths.gif", interval = 0.005, ani.width = 700, ani.height = 490)

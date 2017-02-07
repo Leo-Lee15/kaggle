@@ -27,7 +27,7 @@ names(part_two) <- str_replace_all(names(part_two), "\\(", "")
 #      problem to replace the NAs with 0s)
 #   3. I'm throwing out types of granted petitions (pardons, commutations,
 #      etc.) anyway
-#   4. As we'll see shortly, if we replace NAs with 0s the math of leftover 
+#   4. As we'll see shortly, if we replace NAs with 0s the math of leftover
 #      petitions still adds up pretty nicely
 part_one[is.na(part_one)] <- 0
 part_two[is.na(part_two)] <- 0
@@ -36,7 +36,7 @@ part_two[is.na(part_two)] <- 0
 part_one <- part_one %>%
   mutate(
     petitions_available = petitions_pending + petitions_received,
-    petitions_blocked = petitions_closed_without_presidential_action + 
+    petitions_blocked = petitions_closed_without_presidential_action +
       petitions_denied_or_closed_without_presidential_action
   ) %>%
   select(
@@ -58,9 +58,9 @@ part_two <- part_two %>%
     petitions_received = petitions_received_pardons + petitions_received_commutations,
     petitions_available = petitions_pending_pardons + petitions_pending_commutations +
       petitions_received_pardons + petitions_received_commutations,
-    petitions_blocked = petitions_closed_without_presidential_action_pardons + 
-      petitions_closed_without_presidential_action_commutations + 
-      petitions_denied_or_closed_without_presidential_action_pardons + 
+    petitions_blocked = petitions_closed_without_presidential_action_pardons +
+      petitions_closed_without_presidential_action_commutations +
+      petitions_denied_or_closed_without_presidential_action_pardons +
       petitions_denied_or_closed_without_presidential_action_commutations
   ) %>%
   select(
