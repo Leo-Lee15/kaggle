@@ -49,7 +49,9 @@ trades <- trades %>%
   left_join(countries) %>%
   select(country_name, country, value) %>%
   group_by(country_name, country) %>%
-  summarise(value = sum(as.numeric(value))) %>%
+  summarise(value = plotrix::rescale(
+    sum(as.numeric(value)), c(0.3, 8)
+  )) %>%
   ungroup()
 ```
 

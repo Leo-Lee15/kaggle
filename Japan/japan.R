@@ -88,9 +88,9 @@ earth <- system.file("images/world.jpg",  package = "threejs")
 # Create empty globe
 globejs(
   img = earth, lat = arcs$dest_lat, long = arcs$dest_long, arcs = arcs[, 1:4],
-  arcsOpacity = 0.6, arcsHeight = 0.8, arcsLwd = arcs$value,
-  arcsColor = "green", atmosphere = TRUE, height = 800,
-  width = 800, bg = "white", value = 4
+  arcsOpacity = 0.6, arcsHeight = 0.5, arcsLwd = arcs$value,
+  arcsColor = "green", atmosphere = TRUE, height = 1200,
+  width = 1200, bg = "white", value = 4
 )
 
 
