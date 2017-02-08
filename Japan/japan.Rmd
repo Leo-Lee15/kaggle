@@ -24,7 +24,7 @@ we'll be using ([Japan Trade Statistics](https://www.kaggle.com/zanjibar/japan-t
 the data only talks about countries (with their names recorded in a non-standard way) and has absolutely no 
 information about their coordinates.
 
-To create the visualization there are 3 steps: geting the coordinates of the capital of each country, 
+To create the visualization there are 3 steps: getting the coordinates of the capital of each country, 
 converting the country names to a more standard form and creating the globe itself.
 
 ## Getting the coordinates
@@ -94,18 +94,18 @@ knitr::kable(head(capitals))
 ## Converting country names
 
 Take a look at how "American Samoa" and "United Arab Emirates" are spelled in the two tables above 
-(that's the main reason why I included them). They are not formated in the same way.
+(that's the main reason why I included them). They are not formatted in the same way.
 
-I'll spare you the details, but this is the most difficult taks you'll face when dealing with spatial 
+I'll spare you the details, but this is the most difficult task you'll face when dealing with spatial 
 data: names are a pain. The two tables we have to work with encode the country names in very different 
-ways, so we need to standarize those.
+ways, so we need to standardize those.
 
 We'll do this with the `countrycodes` package, more specifically the `countrycode_data` dataset, which 
 contains a column of regex statements to match almost any way you could write the name of each country. 
 First I clean just a little bit the names in `trades$country_name`, but then it's as straight forward as this:
 
 ```{r, include=FALSE}
-# Remove underscores, remove country abreviations in parentheses, and
+# Remove underscores, remove country abbreviations in parentheses, and
 # change South Korea's name so that it matches
 clean_names <- function(names) {
   names <- str_replace_all(names, "_", " ")
@@ -171,7 +171,7 @@ trades between the two points, but we'll exclude this column when passing the ta
 function). This is how I created `arcs`:
 
 ```{r}
-# Create origins and destinations for arcs (origin is always Tokio)
+# Create origins and destinations for arcs (origin is always Tokyo)
 arcs <- geo_trades %>%
   cbind(
     origin_lat = 35.68,
@@ -203,3 +203,9 @@ globejs(
   width = 800, bg = "white", value = 4
 )
 ```
+
+**P.S.**: I am pretty sure the `arcsLwd` isn't working on Kaggle because the width of the arcs should be varying
+according to the total value of the trades. If anyone has any idea of why this is happening, please give me a heads up!
+
+**P.S. 2**: If you're interested in more analyses and visualizations, please consider taking a look at my
+[Kaggle repository](https://github.com/ctlente/Kaggle) and at my [blog](https://medium.com/@ctlente)!
