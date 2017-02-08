@@ -66,7 +66,7 @@ geo_trades <- totals %>%
   filter(!is.na(country_capitals)) %>%
   select(-country_capitals)
 
-# Create origins and destinations for arcs
+# Create origins and destinations for arcs (origin is always Tokio)
 arcs <- geo_trades %>%
   as_tibble() %>%
   cbind(
