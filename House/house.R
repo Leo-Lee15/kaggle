@@ -1,6 +1,7 @@
 library(highcharter)
 library(tidyverse)
 library(lubridate)
+library(plotly)
 
 
 
@@ -87,29 +88,29 @@ deputies_summ %>%
 
 ## DENSITY PLOTS --------------------------------------------------------------
 
-# Plot times reimbursed
-hchart(
-  density(deputies_summ$refund_cnt, from = 0),
-  type = "area",
-  color = "#B71C1C",
-  name = "Refund Count"
-)
-
-# Plot mean amount reimbursed
-hchart(
-  density(deputies_summ$refund_avg),
-  type = "area",
-  color = "#B71C1C",
-  name = "Mean Refund Value"
-)
-
-# Plot total amount reimbursed
-hchart(
-  density(deputies_summ$refund_tot),
-  type = "area",
-  color = "#B71C1C",
-  name = "Total Refund Value"
-)
+# # Plot times reimbursed
+# hchart(
+#   density(deputies_summ$refund_cnt, from = 0),
+#   type = "area",
+#   color = "#B71C1C",
+#   name = "Refund Count"
+# )
+# 
+# # Plot mean amount reimbursed
+# hchart(
+#   density(deputies_summ$refund_avg),
+#   type = "area",
+#   color = "#B71C1C",
+#   name = "Mean Refund Value"
+# )
+# 
+# # Plot total amount reimbursed
+# hchart(
+#   density(deputies_summ$refund_tot),
+#   type = "area",
+#   color = "#B71C1C",
+#   name = "Total Refund Value"
+# )
 
 
 
@@ -159,35 +160,50 @@ deputies_summ %>%
 ## TIME SERIES ----------------------------------------------------------------
 
 # Plot count of refunds
-hchart(
-  ts(time_summ$refund_cnt),
-  type = "area",
-  color = "#B71C1C",
-  name = "Refund Count"
-)
+time_summ %>%
+  plot_ly(
+    x = ~refund_date,
+    y = ~refund_cnt,
+    type = 'scatter',
+    mode = 'lines'
+  )
 
 ### THATS IT
 # Plot mean value of refunds on weekdays
-hchart(
-  ts(time_summ$refund_avg),
-  type = "area",
-  color = "#B71C1C",
-  name = "Mean Refund Value"
-)
+time_summ %>%
+  plot_ly(
+    x = ~refund_date,
+    y = ~refund_avg,
+    type = 'scatter',
+    mode = 'lines'
+  )
 
 # Plot total value of refunds on weekdays
-hchart(
-  ts(time_summ$refund_tot),
-  type = "area",
-  color = "#B71C1C",
-  name = "Total Refund Value"
-)
+time_summ %>%
+  plot_ly(
+    x = ~refund_date,
+    y = ~refund_tot,
+    type = 'scatter',
+    mode = 'lines'
+  )
 
 
 
+## PARTY PLOTS ----------------------------------------------------------------
 
+deputies_summ %>%
+  plot_ly(
+    y = ~refund_avg,
+    color = ~party,
+    type = "box"
+  )
 
-
+deputies_summ %>%
+  plot_ly(
+    y = ~refund_avg,
+    color = ~ideology,
+    type = "box"
+  )
 
 
 
