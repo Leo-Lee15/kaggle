@@ -1,7 +1,8 @@
-library(highcharter)
 library(tidyverse)
 library(lubridate)
 library(plotly)
+library(cluster)
+library(Rtsne)
 
 
 
@@ -48,6 +49,15 @@ time_summ <- deputies %>%
   filter(!is.na(refund_date)) %>%
   mutate(refund_date = as_date(refund_date)) %>%
   group_by(refund_date, wday = wday(refund_date)) %>%
+  summarise(
+    refund_cnt = n(),
+    refund_avg = mean(refund_value),
+    refund_tot = sum(refund_value)
+  )
+
+# Get summary of each type of refund
+desc_summ <- deputies %>%
+  group_by(refund_description) %>%
   summarise(
     refund_cnt = n(),
     refund_avg = mean(refund_value),
@@ -169,7 +179,7 @@ time_summ %>%
   )
 
 ### THATS IT
-# Plot mean value of refunds on weekdays
+# Plot mean value of refunds
 time_summ %>%
   plot_ly(
     x = ~refund_date,
@@ -178,7 +188,7 @@ time_summ %>%
     mode = 'lines'
   )
 
-# Plot total value of refunds on weekdays
+# Plot total value of refunds
 time_summ %>%
   plot_ly(
     x = ~refund_date,
@@ -191,6 +201,7 @@ time_summ %>%
 
 ## PARTY PLOTS ----------------------------------------------------------------
 
+# Plot mean value of refunds by party
 deputies_summ %>%
   plot_ly(
     y = ~refund_avg,
@@ -198,6 +209,7 @@ deputies_summ %>%
     type = "box"
   )
 
+# Plot mean value of refunds by ideology
 deputies_summ %>%
   plot_ly(
     y = ~refund_avg,
@@ -205,19 +217,38 @@ deputies_summ %>%
     type = "box"
   )
 
+# Plot mean value of refunds by state
+deputies_summ %>%
+  plot_ly(
+    y = ~refund_avg,
+    color = ~state,
+    type = "box"
+  )
 
 
 
+## BAR CHARTS -----------------------------------------------------------------
 
+desc_summ %>%
+  plot_ly(
+    x = ~refund_description,
+    y = ~refund_avg,
+    type = "bar"
+  )
 
+desc_summ %>%
+  plot_ly(
+    x = ~refund_description,
+    y = ~refund_cnt,
+    type = "bar"
+  )
 
-
-
-
-
-
-
-
+desc_summ %>%
+  plot_ly(
+    x = ~refund_description,
+    y = ~refund_tot,
+    type = "bar"
+  )
 
 
 
