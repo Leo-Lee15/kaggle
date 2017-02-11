@@ -1,5 +1,6 @@
 library(highcharter)
 library(tidyverse)
+library(lubridate)
 
 
 
@@ -32,41 +33,52 @@ deputies_summ <- deputies %>%
   filter(!is.na(deputy_state)) %>%
   group_by(deputy_name) %>%
   summarise(
-    cnt_refund = n(),
-    avg_refund = mean(refund_value),
-    tot_refund = sum(refund_value),
+    refund_cnt = n(),
+    refund_avg = mean(refund_value),
+    refund_tot = sum(refund_value),
     state = deputy_state[1],
     party = political_party[1],
     ideology = party_ideology1[1]
   )
 
+# Get summary of each day
+time_summ <- deputies %>%
+  filter(!is.na(deputy_state)) %>%
+  filter(!is.na(refund_date)) %>%
+  mutate(refund_date = as_date(refund_date)) %>%
+  group_by(refund_date, wday = wday(refund_date)) %>%
+  summarise(
+    refund_cnt = n(),
+    refund_avg = mean(refund_value),
+    refund_tot = sum(refund_value)
+  )
 
 
 ## DISTRIBUTION PLOTS ---------------------------------------------------------
 
 # Plot times reimbursed
 deputies_summ %>%
-  arrange(cnt_refund) %>%
+  arrange(refund_cnt) %>%
   mutate(deputy_name = reorder_ftc(deputy_name)) %>%
-  ggplot(aes(deputy_name, cnt_refund, color = party)) +
+  ggplot(aes(deputy_name, refund_cnt, color = party)) +
     geom_point() +
     my_theme + 
     guides(col = guide_legend(ncol = 20))
 
 # Plot mean amount reimbursed
 deputies_summ %>%
-  arrange(avg_refund) %>%
+  arrange(refund_avg) %>%
   mutate(deputy_name = reorder_ftc(deputy_name)) %>%
-  ggplot(aes(deputy_name, avg_refund, color = party)) +
+  ggplot(aes(deputy_name, refund_avg, color = party)) +
     geom_point() +
     my_theme + 
     guides(col = guide_legend(ncol = 20))
 
 # Plot total amount reimbursed
 deputies_summ %>%
-  arrange(tot_refund) %>%
+  arrange(refund_tot) %>%
   mutate(deputy_name = reorder_ftc(deputy_name)) %>%
-  ggplot(aes(deputy_name, tot_refund, color = party)) +
+  ggplot(aes(deputy_name, refund_tot, color = party)) +
     geom_point() +
     my_theme + 
     guides(col = guide_legend(ncol = 20))
@@ -77,7 +89,7 @@ deputies_summ %>%
 
 # Plot times reimbursed
 hchart(
-  density(deputies_summ$cnt_refund, from = 0),
+  density(deputies_summ$refund_cnt, from = 0),
   type = "area",
   color = "#B71C1C",
   name = "Refund Count"
@@ -85,7 +97,7 @@ hchart(
 
 # Plot mean amount reimbursed
 hchart(
-  density(deputies_summ$avg_refund),
+  density(deputies_summ$refund_avg),
   type = "area",
   color = "#B71C1C",
   name = "Mean Refund Value"
@@ -93,7 +105,7 @@ hchart(
 
 # Plot total amount reimbursed
 hchart(
-  density(deputies_summ$tot_refund),
+  density(deputies_summ$refund_tot),
   type = "area",
   color = "#B71C1C",
   name = "Total Refund Value"
@@ -105,9 +117,9 @@ hchart(
 
 # Plot times reimbursed X mean amount reimbursed
 deputies_summ %>%
-  arrange(cnt_refund) %>%
+  arrange(refund_cnt) %>%
   mutate(deputy_name = reorder_ftc(deputy_name)) %>%
-  ggplot(aes(cnt_refund, avg_refund, color = party)) +
+  ggplot(aes(refund_cnt, refund_avg, color = party)) +
     geom_point() +
     theme_classic() +
     theme(
@@ -118,9 +130,9 @@ deputies_summ %>%
 
 # Plot times reimbursed X total amount reimbursed
 deputies_summ %>%
-  arrange(cnt_refund) %>%
+  arrange(refund_cnt) %>%
   mutate(deputy_name = reorder_ftc(deputy_name)) %>%
-  ggplot(aes(cnt_refund, tot_refund, color = party)) +
+  ggplot(aes(refund_cnt, refund_tot, color = party)) +
   geom_point() +
   theme_classic() +
   theme(
@@ -131,9 +143,9 @@ deputies_summ %>%
 
 # Plot mean amount reimbursed X total amount reimbursed
 deputies_summ %>%
-  arrange(avg_refund) %>%
+  arrange(refund_avg) %>%
   mutate(deputy_name = reorder_ftc(deputy_name)) %>%
-  ggplot(aes(avg_refund, tot_refund, color = party)) +
+  ggplot(aes(refund_avg, refund_tot, color = party)) +
     geom_point() +
     theme_classic() +
     theme(
@@ -144,8 +156,32 @@ deputies_summ %>%
 
 
 
+## TIME SERIES ----------------------------------------------------------------
 
+# Plot count of refunds
+hchart(
+  ts(time_summ$refund_cnt),
+  type = "area",
+  color = "#B71C1C",
+  name = "Refund Count"
+)
 
+### THATS IT
+# Plot mean value of refunds on weekdays
+hchart(
+  ts(time_summ$refund_avg),
+  type = "area",
+  color = "#B71C1C",
+  name = "Mean Refund Value"
+)
+
+# Plot total value of refunds on weekdays
+hchart(
+  ts(time_summ$refund_tot),
+  type = "area",
+  color = "#B71C1C",
+  name = "Total Refund Value"
+)
 
 
 
