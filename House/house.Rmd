@@ -1,0 +1,39 @@
+---
+title: "Paid Vacation - Brazil's House of Deputies"
+author: "Caio Lente"
+date: "2017-02-12"
+output: 
+  html_document: 
+    fig_height: 7
+    fig_width: 10
+---
+
+```{r setup, include=FALSE}
+# Knitr options
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load libraries
+library(plotly)
+library(tidyverse)
+library(lubridate)
+
+# Read data
+deputies <- read_csv("House/Data/dirty_deputies_v2.csv")
+```
+
+My goal with this analysis is to find out whether Brazilian deputies
+have been using their reimbursement rights inadequately.
+
+These reimbursements are called Quota for the Exercise of Parliamentary
+Activity and are "[a quota] destined to pay for expenses exclusively
+linked to the execise of parliamentary activity". Therefore, as far as
+I could tell, there are two main ways we could detect an improper claim
+for reimbursement (given the available data):
+* If the refund category is suspicious
+* If the time component of the refund is suspicious
+
+## Dissemination of Parliamentary Activity
+
+
+
+
