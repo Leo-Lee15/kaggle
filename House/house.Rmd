@@ -18,7 +18,17 @@ library(tidyverse)
 library(lubridate)
 
 # Read data
-deputies <- read_csv("House/Data/dirty_deputies_v2.csv")
+deputies <- read_csv("Data/dirty_deputies_v2.csv")
+
+# Get summary of each type of refund
+desc_summ <- deputies %>%
+  group_by(refund_description) %>%
+  summarise(
+    refund_cnt = n(),
+    refund_avg = mean(refund_value),
+    refund_tot = sum(refund_value)
+  ) %>%
+  ungroup()
 ```
 
 My goal with this analysis is to find out whether Brazilian deputies
@@ -33,6 +43,87 @@ for reimbursement (given the available data):
 * If the time component of the refund is suspicious
 
 ## Dissemination of Parliamentary Activity
+
+To investigate suspicious refund categories I tried plotting one box-plot
+for each. Much to my surprise, I had already found something very weird.
+
+```{r reorder_deputies, include=FALSE}
+# Get median of refunds for each deputy
+d <- deputies %>%
+  group_by(refund_description) %>%
+  summarise(med = median(refund_value)) %>%
+  arrange(med) %>%
+  select(refund_description)
+
+# Reorder deputies according to median
+deputies$refund_description <- ordered(
+  deputies$refund_description,
+  levels = d$refund_description
+)
+```
+
+```{r box_plots, warning=FALSE}
+# Plot refund descriptions
+deputies %>%
+  plot_ly(
+    x = ~refund_description,
+    y = ~refund_value,
+    type = "box",
+    color = ~refund_description
+  ) %>%
+  layout(
+    legend = list(orientation = 'h'),
+    xaxis = list(
+      showticklabels = FALSE,
+      title = ""
+    )
+  )
+```
+
+It seems that "dissemination of parliamentary activity" has a lot more
+outliers than the other categories. Since this refund description is
+very vague, it seems to me that it is being widely used by the deputies
+as a cover up for improper refunds.
+
+If we look into it a little more, we find that the top outlier of the
+whole plot is in this category and corresponds to R$184,500.00 reimbursed
+for expenses at a small print shop. This category is also the one that
+has had the highest overall cost for the taxpayer: a total of
+R$48,645,429.54.
+
+```{r reorder_descriptions, include=FALSE}
+# Arrange descriptions according to total value
+desc_summ <- desc_summ %>%
+  arrange(refund_tot)
+
+# Reorder deputies according to median
+desc_summ$refund_description <- ordered(
+  desc_summ$refund_description,
+  levels = desc_summ$refund_description
+)
+```
+
+```{r bar_plots, warning=FALSE}
+# Plot total value of refunds
+desc_summ %>%
+  plot_ly(
+    x = ~refund_description,
+    y = ~refund_tot,
+    type = "bar",
+    color = ~refund_description
+  ) %>%
+  layout(
+    legend = list(orientation = 'h'),
+    xaxis = list(
+      showticklabels = FALSE,
+      title = ""
+    )
+  )
+```
+
+
+
+
 
 
 

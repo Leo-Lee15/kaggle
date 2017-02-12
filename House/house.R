@@ -1,5 +1,4 @@
 library(plotly)
-library(highcharter)
 library(tidyverse)
 library(lubridate)
 
@@ -238,8 +237,13 @@ desc_summ %>%
   plot_ly(
     x = ~refund_description,
     y = ~refund_tot,
-    type = "bar"
-  )
+    type = "bar",
+    color = ~refund_description
+  ) %>%
+  layout(legend = list(orientation = 'h'), xaxis = list(
+    showticklabels = FALSE,
+    title = ""
+  ))
 
 
 
