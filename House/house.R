@@ -1,8 +1,7 @@
+library(plotly)
+library(highcharter)
 library(tidyverse)
 library(lubridate)
-library(plotly)
-library(cluster)
-library(Rtsne)
 
 
 
@@ -41,7 +40,8 @@ deputies_summ <- deputies %>%
     state = deputy_state[1],
     party = political_party[1],
     ideology = party_ideology1[1]
-  )
+  ) %>%
+  ungroup()
 
 # Get summary of each day
 time_summ <- deputies %>%
@@ -53,7 +53,8 @@ time_summ <- deputies %>%
     refund_cnt = n(),
     refund_avg = mean(refund_value),
     refund_tot = sum(refund_value)
-  )
+  ) %>%
+  ungroup()
 
 # Get summary of each type of refund
 desc_summ <- deputies %>%
@@ -62,7 +63,8 @@ desc_summ <- deputies %>%
     refund_cnt = n(),
     refund_avg = mean(refund_value),
     refund_tot = sum(refund_value)
-  )
+  ) %>%
+  ungroup()
 
 
 ## DISTRIBUTION PLOTS ---------------------------------------------------------
@@ -98,29 +100,12 @@ deputies_summ %>%
 
 ## DENSITY PLOTS --------------------------------------------------------------
 
-# # Plot times reimbursed
-# hchart(
-#   density(deputies_summ$refund_cnt, from = 0),
-#   type = "area",
-#   color = "#B71C1C",
-#   name = "Refund Count"
-# )
-# 
-# # Plot mean amount reimbursed
-# hchart(
-#   density(deputies_summ$refund_avg),
-#   type = "area",
-#   color = "#B71C1C",
-#   name = "Mean Refund Value"
-# )
-# 
-# # Plot total amount reimbursed
-# hchart(
-#   density(deputies_summ$refund_tot),
-#   type = "area",
-#   color = "#B71C1C",
-#   name = "Total Refund Value"
-# )
+# Plot mean amount reimbursed
+t <- deputies %>%
+  filter(refund_value > 10000) %>%
+  select(refund_value)
+t <- density(time_summ$refund_avg)
+plot_ly(x = t$x, y = t$y, mode = "lines", fill = "tozeroy")
 
 
 
@@ -174,22 +159,25 @@ time_summ %>%
   plot_ly(
     x = ~refund_date,
     y = ~refund_cnt,
-    type = 'scatter',
-    mode = 'lines'
+    type = 'scatter'
   )
 
-### THATS IT
+# THAT'S IT
 # Plot mean value of refunds
 time_summ %>%
+  filter(refund_date > as_date("2016-01-01")) %>%
   plot_ly(
     x = ~refund_date,
     y = ~refund_avg,
     type = 'scatter',
     mode = 'lines'
-  )
+  ) %>%
+  add_trace(x = c(as_date("2016-12-23")), y= c(0, 10000), mode = "lines")
+
 
 # Plot total value of refunds
 time_summ %>%
+  filter(refund_date > as_date("2016-01-01")) %>%
   plot_ly(
     x = ~refund_date,
     y = ~refund_tot,
@@ -229,13 +217,7 @@ deputies_summ %>%
 
 ## BAR CHARTS -----------------------------------------------------------------
 
-desc_summ %>%
-  plot_ly(
-    x = ~refund_description,
-    y = ~refund_avg,
-    type = "bar"
-  )
-
+# Plot count of refunds
 desc_summ %>%
   plot_ly(
     x = ~refund_description,
@@ -243,6 +225,15 @@ desc_summ %>%
     type = "bar"
   )
 
+# Plot mean value of refunds
+desc_summ %>%
+  plot_ly(
+    x = ~refund_description,
+    y = ~refund_avg,
+    type = "bar"
+  )
+
+# Plot total value of refunds
 desc_summ %>%
   plot_ly(
     x = ~refund_description,
@@ -252,7 +243,29 @@ desc_summ %>%
 
 
 
+## DESCRIPTION PLOTS ----------------------------------------------------------
 
+# Reorder deputies
+t <- deputies %>%
+  group_by(refund_description) %>%
+  summarise(med = median(refund_value)) %>%
+  arrange(med) %>%
+  select(refund_description)
+deputies$refund_description <- ordered(
+  deputies$refund_description,
+  levels = t$refund_description
+)
 
-
+# Plot refund descriptions
+deputies %>%
+  plot_ly(
+    x = ~refund_description,
+    y = ~refund_value,
+    type = "box",
+    color = ~refund_description
+  ) %>%
+  layout(legend = list(orientation = 'h'), xaxis = list(
+    showticklabels = FALSE,
+    title = ""
+  ))
 
