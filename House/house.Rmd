@@ -35,11 +35,11 @@ My goal with this analysis is to find out whether Brazilian deputies
 have been using their reimbursement rights inadequately.
 
 These reimbursements are called Quota for the Exercise of Parliamentary
-Activity and are "[a quota] destined to pay for expenses exclusively
-linked to the execise of parliamentary activity". Therefore, as far as
-I could tell, there are two main ways we could detect an improper claim
-for reimbursement (given the available data):
-* If the refund category is suspicious
+Activity and are "designated to pay for expenses exclusively linked to
+the execise of parliamentary activity". Therefore, as far as I could tell,
+there are two main ways we could detect an improper reimbursement claim
+(given the available data):
+* If the refund category is suspicious or
 * If the time component of the refund is suspicious
 
 ## Dissemination of Parliamentary Activity
@@ -81,8 +81,8 @@ desc_summ %>%
 Apparently "dissemination of parliamentary activity" is the category
 that has had the highest overall cost for the taxpayer: a total of
 R$48,645,429.54. Since this refund description is very vague, it seems
-to me that it is being widely used by the deputies as a cover up for
-improper refunds.
+to me that it is being widely used by the deputies as a cover up improper
+refunds.
 
 Just to make sure I wasn't being too quick to judge, I decided to look
 into this a little further and ceated a box-plot for each category.
@@ -120,7 +120,7 @@ deputies %>%
   )
 ```
 
-In the image above dissemination of parliamentary activity doesn't have
+In the image above, dissemination of parliamentary activity doesn't have
 the highest median, but it's outliers stand out from the rest. If we
 examine to top outlier of this category (and of the whole plot), we find
 that it corresponds to R$184,500.00 being reimbursed for expenses at a
