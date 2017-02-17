@@ -1,11 +1,11 @@
 ---
-title: "Paid Vacation - Brazil's House of Deputies"
+title: "Dissemination of Paid Vacations - Brazil's House of Deputies"
 author: "Caio Lente"
 date: "2017-02-12"
 output: 
   html_document: 
     fig_height: 7
-    fig_width: 10
+    fig_width: 9.3
 ---
 
 ```{r setup, include=FALSE}
@@ -16,13 +16,27 @@ knitr::opts_chunk$set(echo = TRUE)
 library(plotly)
 library(tidyverse)
 library(lubridate)
+library(RColorBrewer)
 
 # Read data
 deputies <- read_csv("Data/dirty_deputies_v2.csv")
 
-# Get summary of each type of refund
-desc_summ <- deputies %>%
+# Get summaryary of each type of refund
+description_summary <- deputies %>%
   group_by(refund_description) %>%
+  summarise(
+    refund_cnt = n(),
+    refund_avg = mean(refund_value),
+    refund_tot = sum(refund_value)
+  ) %>%
+  ungroup()
+
+# Get summaryary of each day
+time_summary <- deputies %>%
+  filter(!is.na(deputy_state)) %>%
+  filter(!is.na(refund_date)) %>%
+  mutate(refund_date = as_date(refund_date)) %>%
+  group_by(refund_date, wday = wday(refund_date)) %>%
   summarise(
     refund_cnt = n(),
     refund_avg = mean(refund_value),
@@ -36,7 +50,7 @@ have been using their reimbursement rights inadequately.
 
 These reimbursements are called Quota for the Exercise of Parliamentary
 Activity and are "designated to pay for expenses exclusively linked to
-the execise of parliamentary activity". Therefore, as far as I could tell,
+the exercise of parliamentary activity". Therefore, as far as I could tell,
 there are two main ways we could detect an improper reimbursement claim
 (given the available data):
 * If the refund category is suspicious or
@@ -45,35 +59,47 @@ there are two main ways we could detect an improper reimbursement claim
 ## Dissemination of Parliamentary Activity
 
 To investigate suspicious refund categories I tried plotting a bar chart
-of total refunds per category. Much to my surprise, I had already found
-something very weird.
+of total refunds per category (of the top 7 categories). Much to my surprise,
+I had already found something very weird.
 
 ```{r reorder_descriptions, include=FALSE}
 # Arrange descriptions according to total value
-desc_summ <- desc_summ %>%
+description_summary <- description_summary %>%
   arrange(refund_tot)
 
 # Reorder deputies according to median
-desc_summ$refund_description <- ordered(
-  desc_summ$refund_description,
-  levels = desc_summ$refund_description
+description_summary$refund_description <- ordered(
+  description_summary$refund_description,
+  levels = description_summary$refund_description
 )
 ```
 
 ```{r bar_plot, warning=FALSE}
 # Plot total value of refunds
-desc_summ %>%
+description_summary %>%
+  filter(
+    row_number() > 10
+  ) %>%
   plot_ly(
     x = ~refund_description,
     y = ~refund_tot,
     type = "bar",
-    color = ~refund_description
+    color = ~refund_description,
+    colors = "Accent",
+    opacity = 0.70
   ) %>%
   layout(
-    legend = list(orientation = 'h'),
-    xaxis = list(
-      showticklabels = FALSE,
+    legend = list(
+      orientation = 'h',
+      traceorder = "reversed",
+      x = 0.5, y = -100
+    ),
+    yaxis = list(
       title = ""
+    ),
+    xaxis = list(
+      title = "",
+      showticklabels = FALSE
     )
   )
 ```
@@ -85,10 +111,11 @@ to me that it is being widely used by the deputies as a cover up improper
 refunds.
 
 Just to make sure I wasn't being too quick to judge, I decided to look
-into this a little further and ceated a box-plot for each category.
+into this a little further and created a box-plot for the 7 categories
+with the highest mean refund values.
 
 ```{r reorder_deputies, include=FALSE}
-# Get median of refunds for each deputy
+# Get median of refunds for each category
 d <- deputies %>%
   group_by(refund_description) %>%
   summarise(med = median(refund_value)) %>%
@@ -105,17 +132,29 @@ deputies$refund_description <- ordered(
 ```{r box_plots, warning=FALSE}
 # Plot refund descriptions
 deputies %>%
+  filter(
+    refund_description %in% d$refund_description[11:17]
+  ) %>%
   plot_ly(
     x = ~refund_description,
     y = ~refund_value,
     type = "box",
-    color = ~refund_description
+    color = ~refund_description,
+    colors = "Paired"
   ) %>%
   layout(
-    legend = list(orientation = 'h'),
+    legend = list(
+      orientation = 'h',
+      traceorder = "reversed",
+      x = 0.5, y = -100
+    ),
+    yaxis = list(
+      title = ""
+    ),
     xaxis = list(
       showticklabels = FALSE,
-      title = ""
+      title = "",
+      mirror = TRUE
     )
   )
 ```
@@ -127,8 +166,83 @@ that it corresponds to R$184,500.00 being reimbursed for expenses at a
 *small print shop*, corroborating to the hypothesis that this category
 is in fact being misused by the deputies.
 
+The next logical step would be doing some text mining on the company names
+to identify their types, and then check if they correspond with the assigned
+refund categories. For the sake of brevity, I won't attempt to do this.
 
+## Paid Vacation
 
+Moving on to analysing the time component of the reimbursements, I decided
+to get the average value of the refunds for each day of the year; with this
+we can tell if there is any time frame where there is an unusual number of
+reimbursement requests. For instance, finding out that there are too many
+refunds of weekends would be suspicious.
 
+After creating loads of visualizations (which you can reproduce by running
+the code on my [Kaggle github repo](https://github.com/ctlente/Kaggle/tree/master/House)),
+I thought there was something weird with the plot below. It represents the
+density distribution of the mean value of refunds by day, see if you can
+guess what grabbed my attention...
 
+```{r get_densities, include=FALSE}
+# Get density of mean refund (day by day)
+t <- density(time_summary$refund_avg)
+```
 
+```{r plot_density, warning=FALSE, message=FALSE}
+# Plot density of mean amount reimbursed (day by day)
+plot_ly(x = t$x, y = t$y, mode = "lines", fill = "tozeroy")
+```
+
+See all those lumps after R$1.5K? It means that there is a large but
+irregular number of days with average refund value higher than R$1.5K.
+If there is a time pattern to these outliers, this could mean there
+is something weird going on.
+
+```{r plot_ts, warning=FALSE, message=FALSE}
+# Plot mean value of refunds
+time_summary %>%
+  filter(refund_date > as_date("2016-01-01")) %>%
+  plot_ly(
+    x = ~refund_date,
+    y = ~refund_avg,
+    type = 'scatter',
+    mode = 'lines',
+    showlegend = FALSE
+  ) %>%
+  layout(
+    yaxis = list(title = ""),
+    xaxis = list(title = "")
+  ) %>%
+  add_trace(
+    x = c(as_date("2016-12-23")),
+    y = c(0, 10000),
+    mode = "lines"
+  )
+```
+
+And as expected, if we look at the time series of mean refund value
+per day, we can clearly see that the days with the highest averages
+are concentrated around late December and early January (especially
+after 23/Dec, represented by the orange line, which is the day the
+summer break starts).
+
+In my opinion this time series shows that some deputies might be using
+reimbursements to pay for their vacations.
+
+## Conclusion
+
+This wasn't in any way an exhaustive report, but I think it is already
+able to supply enough evidence to the idea that Brazilian deputies are
+using public money for personal gain. In the beginning we set out
+to investigate two aspects of the dataset, and were able to find
+suspicious activity on both; there are probably many other ways to
+look at this data that I didn't think of or didn't have time for, so
+I highly encourage you to analyse it for yourself!
+
+If you'd like to know more about this subject I suggest
+[Serenata de Amor](https://github.com/datasciencebr/serenata-de-amor),
+an initiative created by Brazilian data scientists that uses AI to
+flag suspicious reimbursement claims. And I also have a [blog](ctlente.com)
+where I post regularly about my data visualization and analyses,
+so if you liked this one there is a big chance you'll like the rest!
