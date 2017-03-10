@@ -1,0 +1,35 @@
+---
+title: "Where, When and How Popular?"
+author: "Caio Lente"
+date: "2017-03-08"
+output: 
+  html_document: 
+    fig_height: 7
+    fig_width: 9.3
+---
+
+```{r setup, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(animation)
+library(stringr)
+library(plotly)
+```
+
+```{r pantheon, message = FALSE, warning = FALSE}
+pantheon <- read_csv("Data/database.csv")
+```
+
+```{r}
+g <- list(
+  scope = 'world',
+  projection = list(type = 'natural earth'),
+  landcolor = toRGB("gray95"),
+  countrycolor = toRGB("gray85"),
+  showland = TRUE
+)
+
+pantheon %>%
+  plot_geo(lat = ~latitude, lon = ~longitude) %>%
+  add_markers(text = ~full_name, alpha = 0.2) %>%
+  layout(geo = g)
+```
