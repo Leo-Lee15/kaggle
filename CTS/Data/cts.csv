@@ -1,0 +1,531 @@
+name,chamber,party,state,district,trump_score,trump_margin,predicted_score,trump_plus_minus
+Cory Gardner,Senate, R, CO,NA,1.0,-0.049,0.468,0.532
+Dean Heller,Senate, R, NV,NA,1.0,-0.024,0.525,0.475
+Patrick J. Toomey,Senate, R, PA,NA,1.0,0.007,0.601,0.399
+Ron Johnson,Senate, R, WI,NA,1.0,0.008,0.602,0.398
+Marco Rubio,Senate, R, FL,NA,1.0,0.012,0.613,0.387
+Susan M. Collins,Senate, R, ME,NA,0.897,-0.03,0.512,0.384
+Richard Burr,Senate, R, NC,NA,1.0,0.037,0.672,0.328
+Thom Tillis,Senate, R, NC,NA,1.0,0.037,0.672,0.328
+Jeff Flake,Senate, R, AZ,NA,1.0,0.035,0.677,0.323
+David Perdue,Senate, R, GA,NA,1.0,0.052,0.706,0.294
+Johnny Isakson,Senate, R, GA,NA,1.0,0.052,0.711,0.289
+John McCain,Senate, R, AZ,NA,0.964,0.035,0.675,0.289
+John Cornyn,Senate, R, TX,NA,1.0,0.09,0.784,0.216
+Ted Cruz,Senate, R, TX,NA,1.0,0.09,0.784,0.216
+Joni Ernst,Senate, R, IA,NA,1.0,0.094,0.791,0.209
+Chuck Grassley,Senate, R, IA,NA,1.0,0.094,0.791,0.209
+Rob Portman,Senate, R, OH,NA,0.966,0.081,0.768,0.198
+Dianne Feinstein,Senate, D, CA,NA,0.357,-0.301,0.197,0.161
+Lindsey Graham,Senate, R, SC,NA,1.0,0.143,0.865,0.135
+Tim Scott,Senate, R, SC,NA,1.0,0.143,0.865,0.135
+Brian Schatz,Senate, D, HI,NA,0.31,-0.322,0.18,0.13
+Dan Sullivan,Senate, R, AK,NA,1.0,0.147,0.876,0.124
+Thad Cochran,Senate, R, MS,NA,1.0,0.178,0.904,0.096
+Roger F. Wicker,Senate, R, MS,NA,1.0,0.178,0.904,0.096
+Mazie K. Hirono,Senate, D, HI,NA,0.276,-0.322,0.18,0.096
+Lisa Murkowski,Senate, R, AK,NA,0.966,0.147,0.87,0.095
+Orrin G. Hatch,Senate, R, UT,NA,1.0,0.181,0.906,0.094
+Mike Lee,Senate, R, UT,NA,1.0,0.181,0.906,0.094
+Roy Blunt,Senate, R, MO,NA,1.0,0.186,0.911,0.089
+Todd Young,Senate, R, IN,NA,1.0,0.192,0.916,0.084
+Bill Cassidy,Senate, R, LA,NA,1.0,0.196,0.92,0.08
+John Kennedy,Senate, R, LA,NA,1.0,0.196,0.92,0.08
+Jerry Moran,Senate, R, KS,NA,1.0,0.206,0.925,0.075
+Steve Daines,Senate, R, MT,NA,1.0,0.204,0.926,0.074
+Pat Roberts,Senate, R, KS,NA,1.0,0.206,0.927,0.073
+Benjamin L. Cardin,Senate, D, MD,NA,0.276,-0.264,0.211,0.065
+Deb Fischer,Senate, R, NE,NA,1.0,0.25,0.955,0.045
+Ben Sasse,Senate, R, NE,NA,1.0,0.25,0.955,0.045
+Lamar Alexander,Senate, R, TN,NA,1.0,0.26,0.958,0.042
+Bob Corker,Senate, R, TN,NA,1.0,0.26,0.959,0.041
+Angus S. King Jr.,Senate, I, ME,NA,0.552,-0.03,0.512,0.04
+John Boozman,Senate, R, AR,NA,1.0,0.269,0.964,0.036
+Tom Cotton,Senate, R, AR,NA,1.0,0.269,0.964,0.036
+Luther Strange,Senate, R, AL,NA,1.0,0.277,0.967,0.033
+Richard C. Shelby,Senate, R, AL,NA,1.0,0.277,0.967,0.033
+Patrick J. Leahy,Senate, D, VT,NA,0.241,-0.264,0.211,0.03
+Mitch McConnell,Senate, R, KY,NA,1.0,0.298,0.974,0.026
+Mike Rounds,Senate, R, SD,NA,1.0,0.298,0.975,0.025
+John Thune,Senate, R, SD,NA,1.0,0.298,0.975,0.025
+Mark R. Warner,Senate, D, VA,NA,0.483,-0.053,0.459,0.024
+Mike Crapo,Senate, R, ID,NA,1.0,0.318,0.98,0.02
+James E. Risch,Senate, R, ID,NA,1.0,0.318,0.98,0.02
+John Hoeven,Senate, R, ND,NA,1.0,0.357,0.988,0.012
+James M. Inhofe,Senate, R, OK,NA,1.0,0.364,0.99,0.01
+James Lankford,Senate, R, OK,NA,1.0,0.364,0.99,0.01
+Charles E. Schumer,Senate, D, NY,NA,0.241,-0.225,0.237,0.005
+Shelley Moore Capito,Senate, R, WV,NA,1.0,0.422,0.996,0.004
+John Barrasso,Senate, R, WY,NA,1.0,0.463,0.998,0.002
+Michael B. Enzi,Senate, R, WY,NA,1.0,0.463,0.998,0.002
+Thomas R. Carper,Senate, D, DE,NA,0.345,-0.114,0.35,-0.005
+Kamala D. Harris,Senate, D, CA,NA,0.172,-0.301,0.19,-0.018
+Jack Reed,Senate, D, RI,NA,0.276,-0.155,0.298,-0.022
+Sheldon Whitehouse,Senate, D, RI,NA,0.276,-0.155,0.298,-0.022
+Maria Cantwell,Senate, D, WA,NA,0.276,-0.155,0.299,-0.023
+Christopher Murphy,Senate, D, CT,NA,0.286,-0.136,0.318,-0.032
+Edward J. Markey,Senate, D, MA,NA,0.179,-0.272,0.213,-0.034
+Christopher A. Coons,Senate, D, DE,NA,0.321,-0.114,0.358,-0.036
+Robert Menendez,Senate, D, NJ,NA,0.276,-0.141,0.314,-0.038
+Chris Van Hollen,Senate, D, MD,NA,0.172,-0.264,0.211,-0.039
+Tammy Duckworth,Senate, D, IL,NA,0.241,-0.171,0.282,-0.041
+Richard J. Durbin,Senate, D, IL,NA,0.207,-0.171,0.282,-0.075
+Rand Paul,Senate, R, KY,NA,0.897,0.298,0.975,-0.078
+Tim Kaine,Senate, D, VA,NA,0.379,-0.053,0.459,-0.08
+Patty Murray,Senate, D, WA,NA,0.207,-0.155,0.299,-0.092
+Elizabeth Warren,Senate, D, MA,NA,0.103,-0.272,0.206,-0.103
+Richard Blumenthal,Senate, D, CT,NA,0.214,-0.136,0.318,-0.104
+Bernard Sanders,Senate, I, VT,NA,0.103,-0.264,0.211,-0.108
+Michael F. Bennet,Senate, D, CO,NA,0.345,-0.049,0.468,-0.123
+Catherine Cortez Masto,Senate, D, NV,NA,0.379,-0.024,0.525,-0.146
+Kirsten E. Gillibrand,Senate, D, NY,NA,0.069,-0.225,0.237,-0.168
+Ron Wyden,Senate, D, OR,NA,0.172,-0.11,0.356,-0.184
+Martin Heinrich,Senate, D, NM,NA,0.207,-0.082,0.402,-0.195
+Amy Klobuchar,Senate, D, MN,NA,0.345,-0.015,0.546,-0.202
+Cory A. Booker,Senate, D, NJ,NA,0.103,-0.141,0.314,-0.211
+Margaret Wood Hassan,Senate, D, NH,NA,0.345,-0.004,0.574,-0.23
+Jeanne Shaheen,Senate, D, NH,NA,0.345,-0.004,0.574,-0.23
+Tom Udall,Senate, D, NM,NA,0.172,-0.082,0.402,-0.23
+Bill Nelson,Senate, D, FL,NA,0.379,0.012,0.613,-0.234
+Jeff Merkley,Senate, D, OR,NA,0.103,-0.11,0.356,-0.253
+Al Franken,Senate, D, MN,NA,0.276,-0.015,0.546,-0.271
+Gary C. Peters,Senate, D, MI,NA,0.31,0.002,0.589,-0.279
+Debbie Stabenow,Senate, D, MI,NA,0.31,0.002,0.589,-0.279
+Robert P. Casey Jr.,Senate, D, PA,NA,0.31,0.007,0.601,-0.291
+Joe Manchin III,Senate, D, WV,NA,0.655,0.422,0.996,-0.34
+Joe Donnelly,Senate, D, IN,NA,0.571,0.192,0.914,-0.343
+Heidi Heitkamp,Senate, D, ND,NA,0.621,0.357,0.988,-0.368
+Claire McCaskill,Senate, D, MO,NA,0.5,0.186,0.915,-0.415
+Sherrod Brown,Senate, D, OH,NA,0.345,0.081,0.768,-0.423
+Tammy Baldwin,Senate, D, WI,NA,0.172,0.008,0.602,-0.43
+Jon Tester,Senate, D, MT,NA,0.448,0.204,0.926,-0.478
+David G. Valadao,House, R, CA,21,1.0,-0.155,0.216,0.784
+Carlos Curbelo,House, R, FL,26,0.905,-0.161,0.209,0.695
+Barbara Comstock,House, R, VA,10,1.0,-0.1,0.352,0.648
+Erik Paulsen,House, R, MN,3,1.0,-0.094,0.369,0.631
+Mike Coffman,House, R, CO,6,1.0,-0.089,0.384,0.616
+Henry Cuellar,House, D, TX,28,0.727,-0.198,0.144,0.583
+Darrell E. Issa,House, R, CA,49,1.0,-0.075,0.427,0.573
+Edward R. Royce,House, R, CA,39,0.955,-0.086,0.393,0.561
+Peter J. Roskam,House, R, IL,6,1.0,-0.07,0.443,0.557
+Stephen Knight,House, R, CA,25,1.0,-0.067,0.452,0.548
+Ileana Ros-Lehtinen,House, R, FL,27,0.682,-0.197,0.146,0.536
+Mimi Walters,House, R, CA,45,1.0,-0.054,0.494,0.506
+Martha McSally,House, R, AZ,2,1.0,-0.049,0.511,0.489
+Will Hurd,House, R, TX,23,1.0,-0.034,0.559,0.441
+Jeff Denham,House, R, CA,10,1.0,-0.03,0.572,0.428
+Pete Sessions,House, R, TX,32,1.0,-0.019,0.608,0.392
+John Abney Culberson,House, R, TX,7,1.0,-0.014,0.624,0.376
+Kevin Yoder,House, R, KS,3,1.0,-0.012,0.63,0.37
+John Katko,House, R, NY,24,0.909,-0.036,0.553,0.356
+David G. Reichert,House, R, WA,8,0.909,-0.03,0.572,0.337
+Leonard Lance,House, R, NJ,7,0.955,-0.011,0.633,0.321
+Patrick Meehan,House, R, PA,7,0.909,-0.023,0.595,0.314
+Rodney P. Frelinghuysen,House, R, NJ,11,1.0,0.009,0.694,0.306
+Jim Costa,House, D, CA,16,0.429,-0.216,0.126,0.302
+Ryan A. Costello,House, R, PA,6,0.952,-0.006,0.651,0.301
+Jason Lewis,House, R, MN,2,1.0,0.012,0.703,0.297
+Dana Rohrabacher,House, R, CA,48,0.909,-0.017,0.614,0.295
+Mario Diaz-Balart,House, R, FL,25,1.0,0.017,0.717,0.283
+Don Bacon,House, R, NE,2,1.0,0.022,0.731,0.269
+Kyrsten Sinema,House, D, AZ,9,0.455,-0.163,0.201,0.254
+Scott Taylor,House, R, VA,2,1.0,0.034,0.765,0.235
+Rod Blum,House, R, IA,1,1.0,0.035,0.766,0.234
+David Young,House, R, IA,3,1.0,0.035,0.766,0.234
+Randy Hultgren,House, R, IL,14,1.0,0.039,0.776,0.224
+David A. Trott,House, R, MI,11,1.0,0.044,0.788,0.212
+Paul D. Ryan*,House, R, WI,1,1.0,0.103,0.809,0.191
+Kenny Marchant,House, R, TX,24,1.0,0.062,0.829,0.171
+Rob Woodall,House, R, GA,7,1.0,0.063,0.831,0.169
+Dave Brat,House, R, VA,7,1.0,0.065,0.835,0.165
+Steve Chabot,House, R, OH,1,1.0,0.066,0.837,0.163
+Mike Bishop,House, R, MI,8,1.0,0.067,0.839,0.161
+Mia B. Love,House, R, UT,4,1.0,0.067,0.839,0.161
+Lloyd Smucker,House, R, PA,16,1.0,0.068,0.841,0.159
+Michael R. Turner,House, R, OH,10,1.0,0.073,0.851,0.149
+Rodney Davis,House, R, IL,13,0.955,0.055,0.814,0.141
+Pete Olson,House, R, TX,22,1.0,0.079,0.862,0.138
+J. Luis Correa,House, D, CA,46,0.182,-0.384,0.044,0.137
+Fred Upton,House, R, MI,6,1.0,0.084,0.871,0.129
+Thomas MacArthur,House, R, NJ,3,0.955,0.062,0.829,0.126
+Michael T. McCaul,House, R, TX,10,1.0,0.091,0.883,0.117
+Ted Poe,House, R, TX,2,1.0,0.093,0.885,0.115
+Ted Budd,House, R, NC,13,1.0,0.094,0.887,0.113
+Devin Nunes,House, R, CA,22,1.0,0.095,0.89,0.11
+George Holding,House, R, NC,2,1.0,0.096,0.891,0.109
+Dennis A. Ross,House, R, FL,15,1.0,0.1,0.897,0.103
+David Schweikert,House, R, AZ,6,1.0,0.1,0.897,0.103
+Lamar Smith,House, R, TX,21,1.0,0.1,0.897,0.103
+Jaime Herrera Beutler,House, R, WA,3,0.955,0.074,0.853,0.102
+Stevan Pearce,House, R, NM,2,1.0,0.102,0.899,0.101
+Brian K. Fitzpatrick,House, R, PA,8,0.773,0.002,0.673,0.1
+Ann Wagner,House, R, MO,2,1.0,0.103,0.901,0.099
+Vern Buchanan,House, R, FL,16,1.0,0.107,0.906,0.094
+J. French Hill,House, R, AR,2,1.0,0.107,0.906,0.094
+Thomas A. Garrett Jr.,House, R, VA,5,1.0,0.111,0.912,0.088
+Patrick J. Tiberi,House, R, OH,12,1.0,0.113,0.914,0.086
+David P. Joyce,House, R, OH,14,1.0,0.115,0.917,0.083
+Robert Pittenger,House, R, NC,9,1.0,0.116,0.92,0.08
+Susan W. Brooks,House, R, IN,5,1.0,0.118,0.92,0.08
+Ken Calvert,House, R, CA,42,1.0,0.12,0.923,0.077
+Scott R. Tipton,House, R, CO,3,1.0,0.12,0.923,0.077
+Mark E. Amodei,House, R, NV,2,1.0,0.123,0.925,0.075
+Joe Barton,House, R, TX,6,1.0,0.123,0.925,0.075
+Lee M. Zeldin,House, R, NY,1,1.0,0.123,0.926,0.074
+Robert J. Wittman,House, R, VA,1,1.0,0.124,0.928,0.072
+Brian J. Mast,House, R, FL,18,0.955,0.092,0.884,0.07
+Albio Sires,House, D, NJ,8,0.105,-0.542,0.035,0.07
+John R. Carter,House, R, TX,31,1.0,0.127,0.931,0.069
+Donald S. Beyer Jr.,House, D, VA,8,0.1,-0.526,0.035,0.065
+Cathy McMorris Rodgers,House, R, WA,5,1.0,0.131,0.935,0.065
+Gene Green,House, D, TX,29,0.1,-0.457,0.037,0.063
+Jim Cooper,House, D, TN,5,0.227,-0.184,0.165,0.063
+Steve Russell,House, R, OK,5,1.0,0.134,0.938,0.062
+Anna G. Eshoo,House, D, CA,18,0.091,-0.532,0.031,0.06
+David Scott,House, D, GA,13,0.1,-0.444,0.041,0.059
+Chris Stewart,House, R, UT,2,1.0,0.14,0.941,0.059
+John J. Faso,House, R, NY,19,0.909,0.073,0.851,0.058
+Jimmy Panetta,House, D, CA,20,0.091,-0.472,0.035,0.056
+Sam Johnson,House, R, TX,3,1.0,0.142,0.945,0.055
+Bruce Poliquin,House, R, ME,2,0.955,0.103,0.901,0.054
+Brad Sherman,House, D, CA,30,0.091,-0.434,0.038,0.053
+Charles W. Dent,House, R, PA,15,0.909,0.076,0.857,0.052
+Mark Walker,House, R, NC,6,1.0,0.147,0.949,0.051
+Bobby L. Rush,House, D, IL,1,0.143,-0.54,0.093,0.05
+Mike Bost,House, R, IL,12,1.0,0.148,0.95,0.05
+Beto O'Rourke,House, D, TX,16,0.091,-0.407,0.041,0.05
+Tom Reed,House, R, NY,23,1.0,0.148,0.951,0.049
+Roger Williams,House, R, TX,25,1.0,0.149,0.951,0.049
+Duncan Hunter,House, R, CA,50,1.0,0.15,0.952,0.048
+Gerald E. Connolly,House, D, VA,11,0.091,-0.394,0.043,0.048
+Paul Cook,House, R, CA,8,1.0,0.151,0.953,0.047
+Andy Barr,House, R, KY,6,1.0,0.153,0.954,0.046
+"Earl L. ""Buddy"" Carter",House, R, GA,1,1.0,0.155,0.954,0.046
+Steve Stivers,House, R, OH,15,1.0,0.154,0.955,0.045
+Richard Hudson,House, R, NC,8,1.0,0.15,0.955,0.045
+Claudia Tenney,House, R, NY,22,1.0,0.155,0.956,0.044
+Ted S. Yoho,House, R, FL,3,1.0,0.16,0.959,0.041
+Brad R. Wenstrup,House, R, OH,2,1.0,0.161,0.96,0.04
+Rick W. Allen,House, R, GA,12,1.0,0.162,0.96,0.04
+James B. Renacci,House, R, OH,16,1.0,0.166,0.963,0.037
+Glenn Grothman,House, R, WI,6,1.0,0.169,0.965,0.035
+Ron DeSantis,House, R, FL,6,1.0,0.17,0.965,0.035
+Tim Walberg,House, R, MI,7,1.0,0.17,0.965,0.035
+Tulsi Gabbard,House, D, HI,2,0.095,-0.318,0.061,0.034
+Adam Kinzinger,House, R, IL,16,1.0,0.172,0.967,0.033
+Bill Flores,House, R, TX,17,1.0,0.175,0.968,0.032
+Virginia Foxx,House, R, NC,5,1.0,0.175,0.968,0.032
+Mike Gallagher,House, R, WI,8,1.0,0.176,0.969,0.031
+Bill Huizenga,House, R, MI,2,1.0,0.176,0.969,0.031
+David Rouzer,House, R, NC,7,1.0,0.177,0.969,0.031
+Joe Wilson,House, R, SC,2,1.0,0.177,0.969,0.031
+Bill Pascrell Jr.,House, D, NJ,9,0.091,-0.312,0.061,0.03
+Dwight Evans,House, D, PA,2,0.048,-0.828,0.019,0.029
+Lynn Jenkins,House, R, KS,2,1.0,0.184,0.972,0.028
+Nancy Pelosi,House, D, CA,12,0.05,-0.775,0.022,0.028
+Gregory W. Meeks,House, D, NY,5,0.053,-0.73,0.026,0.027
+Gus M. Bilirakis,House, R, FL,12,1.0,0.186,0.974,0.026
+Frank A. LoBiondo,House, R, NJ,2,0.818,0.046,0.793,0.025
+Tom Rice,House, R, SC,7,1.0,0.189,0.975,0.025
+Donald M. Payne Jr.,House, D, NJ,10,0.048,-0.724,0.023,0.024
+Luis V. Gutiérrez,House, D, IL,4,0.05,-0.689,0.026,0.024
+Frederica S. Wilson,House, D, FL,24,0.05,-0.677,0.027,0.023
+Scott H. Peters,House, D, CA,52,0.136,-0.225,0.113,0.023
+Hakeem S. Jeffries,House, D, NY,8,0.045,-0.711,0.023,0.023
+Nanette Diaz Barragán,House, D, CA,44,0.045,-0.707,0.023,0.022
+Doug LaMalfa,House, R, CA,1,1.0,0.197,0.978,0.022
+Tim Murphy,House, R, PA,18,1.0,0.196,0.978,0.022
+Lucille Roybal-Allard,House, D, CA,40,0.045,-0.694,0.024,0.022
+Eddie Bernice Johnson,House, D, TX,30,0.053,-0.608,0.031,0.021
+Randy K. Weber Sr.,House, R, TX,14,1.0,0.198,0.979,0.021
+Peter T. King,House, R, NY,2,0.905,0.091,0.884,0.021
+Jerrold Nadler,House, D, NY,10,0.053,-0.595,0.032,0.02
+F. James Sensenbrenner Jr.,House, R, WI,5,1.0,0.201,0.98,0.02
+Greg Walden,House, R, OR,2,1.0,0.201,0.98,0.02
+Marcia L. Fudge,House, D, OH,11,0.045,-0.635,0.026,0.019
+Sean P. Duffy,House, R, WI,7,1.0,0.205,0.981,0.019
+Robert A. Brady,House, D, PA,1,0.045,-0.613,0.027,0.018
+Al Green,House, D, TX,9,0.045,-0.613,0.027,0.018
+Bill Posey,House, R, FL,8,1.0,0.207,0.982,0.018
+Tony Cárdenas,House, D, CA,29,0.045,-0.609,0.027,0.018
+Brenda L. Lawrence,House, D, MI,14,0.045,-0.609,0.027,0.018
+Keith J. Rothfus,House, R, PA,12,1.0,0.208,0.982,0.018
+Wm. Lacy Clay,House, D, MO,1,0.048,-0.582,0.03,0.018
+Robin L. Kelly,House, D, IL,2,0.045,-0.589,0.028,0.017
+Anthony G. Brown,House, D, MD,4,0.045,-0.585,0.028,0.017
+Trent Franks,House, R, AZ,8,1.0,0.211,0.983,0.017
+Sheila Jackson Lee,House, D, TX,18,0.048,-0.565,0.031,0.017
+Joseph Crowley,House, D, NY,14,0.045,-0.579,0.029,0.017
+Steve Cohen,House, D, TN,9,0.045,-0.577,0.029,0.017
+Jack Bergman,House, R, MI,1,1.0,0.213,0.984,0.016
+Jeff Fortenberry,House, R, NE,1,1.0,0.213,0.984,0.016
+Scott Perry,House, R, PA,4,1.0,0.215,0.984,0.016
+Daniel M. Donovan Jr.,House, R, NY,11,0.909,0.098,0.894,0.015
+Elijah E. Cummings,House, D, MD,7,0.045,-0.55,0.03,0.015
+Hank Johnson Jr.,House, D, GA,4,0.048,-0.531,0.033,0.015
+Eliot L. Engel,House, D, NY,16,0.048,-0.526,0.033,0.015
+Kevin McCarthy,House, R, CA,23,1.0,0.22,0.986,0.014
+Francis Rooney,House, R, FL,19,1.0,0.221,0.986,0.014
+Dan Newhouse,House, R, WA,4,1.0,0.228,0.988,0.012
+Ruben Gallego,House, D, AZ,7,0.048,-0.492,0.035,0.012
+Adam B. Schiff,House, D, CA,28,0.045,-0.498,0.033,0.012
+Elise M. Stefanik,House, R, NY,21,0.955,0.139,0.942,0.012
+Adam Smith,House, D, WA,9,0.053,-0.472,0.041,0.012
+Ken Buck,House, R, CO,4,1.0,0.231,0.988,0.012
+Marc A. Veasey,House, D, TX,33,0.045,-0.492,0.034,0.012
+Juan Vargas,House, D, CA,51,0.045,-0.49,0.034,0.012
+Jackie Walorski,House, R, IN,2,1.0,0.232,0.988,0.012
+Blake Farenthold,House, R, TX,27,1.0,0.236,0.989,0.011
+Lou Barletta,House, R, PA,11,1.0,0.238,0.99,0.01
+Jason Chaffetz,House, R, UT,3,1.0,0.239,0.99,0.01
+Joaquin Castro,House, D, TX,20,0.091,-0.267,0.081,0.01
+Mike Johnson,House, R, LA,4,1.0,0.24,0.99,0.01
+Doug Lamborn,House, R, CO,5,1.0,0.24,0.99,0.01
+Mike Quigley,House, D, IL,5,0.045,-0.466,0.036,0.01
+Gregg Harper,House, R, MS,3,1.0,0.245,0.991,0.009
+Patrick T. McHenry,House, R, NC,10,1.0,0.245,0.991,0.009
+Chris Collins,House, R, NY,27,1.0,0.245,0.991,0.009
+Eric Swalwell,House, D, CA,15,0.045,-0.457,0.036,0.009
+Michael K. Simpson,House, R, ID,2,1.0,0.247,0.991,0.009
+Bob Goodlatte,House, R, VA,6,1.0,0.248,0.991,0.009
+John R. Moolenaar,House, R, MI,4,1.0,0.248,0.991,0.009
+Mike Thompson,House, D, CA,5,0.045,-0.449,0.037,0.008
+Doris O. Matsui,House, D, CA,6,0.045,-0.448,0.037,0.008
+Barry Loudermilk,House, R, GA,11,1.0,0.25,0.992,0.008
+Robert E. Latta,House, R, OH,5,1.0,0.251,0.992,0.008
+Jody B. Hice,House, R, GA,10,1.0,0.255,0.992,0.008
+Tom Emmer,House, R, MN,6,1.0,0.257,0.993,0.007
+Trey Gowdy,House, R, SC,4,1.0,0.257,0.993,0.007
+Filemon Vela,House, D, TX,34,0.095,-0.215,0.088,0.007
+Mike Kelly,House, R, PA,3,1.0,0.261,0.993,0.007
+Michael C. Burgess,House, R, TX,26,1.0,0.265,0.994,0.006
+Trey Hollingsworth,House, R, IN,9,1.0,0.269,0.994,0.006
+Steve King,House, R, IA,4,1.0,0.274,0.994,0.006
+Thomas J. Rooney,House, R, FL,17,1.0,0.272,0.994,0.006
+Darin LaHood,House, R, IL,18,1.0,0.273,0.994,0.006
+James E. Clyburn,House, D, SC,6,0.05,-0.365,0.045,0.005
+Rob Bishop,House, R, UT,1,1.0,0.273,0.995,0.005
+Tom McClintock,House, R, CA,4,0.955,0.147,0.949,0.005
+Ted Lieu,House, D, CA,33,0.048,-0.413,0.042,0.005
+Terri A. Sewell,House, D, AL,7,0.045,-0.412,0.041,0.005
+Andy Harris,House, R, MD,1,1.0,0.284,0.995,0.005
+Jeb Hensarling,House, R, TX,5,1.0,0.284,0.995,0.005
+Norma J. Torres,House, D, CA,35,0.048,-0.408,0.043,0.005
+Jim Bridenstine,House, R, OK,1,1.0,0.287,0.996,0.004
+John H. Rutherford,House, R, FL,4,1.0,0.28,0.996,0.004
+Glenn Thompson,House, R, PA,5,1.0,0.288,0.996,0.004
+Austin Scott,House, R, GA,8,1.0,0.289,0.996,0.004
+Ralph Lee Abraham,House, R, LA,5,1.0,0.294,0.996,0.004
+Bradley Byrne,House, R, AL,1,1.0,0.294,0.996,0.004
+Mark Meadows,House, R, NC,11,1.0,0.294,0.996,0.004
+Bob Gibbs,House, R, OH,7,1.0,0.297,0.996,0.004
+Kristi L. Noem,House, R, SD,AL,1.0,0.298,0.996,0.004
+Alma S. Adams,House, D, NC,12,0.045,-0.4,0.042,0.003
+David E. Price,House, D, NC,4,0.045,-0.4,0.042,0.003
+Kay Granger,House, R, TX,12,1.0,0.302,0.997,0.003
+Linda T. Sánchez,House, D, CA,38,0.045,-0.396,0.043,0.003
+Sam Graves,House, R, MO,6,1.0,0.314,0.997,0.003
+Steve Womack,House, R, AR,3,1.0,0.314,0.997,0.003
+A. Drew Ferguson IV,House, R, GA,3,1.0,0.315,0.997,0.003
+Martha Roby,House, R, AL,2,1.0,0.319,0.998,0.002
+Daniel Webster,House, R, FL,11,1.0,0.323,0.998,0.002
+Paul Mitchell,House, R, MI,10,1.0,0.322,0.998,0.002
+Bruce Westerman,House, R, AR,4,1.0,0.329,0.998,0.002
+Trent Kelly,House, R, MS,1,1.0,0.33,0.998,0.002
+Mike Rogers,House, R, AL,3,1.0,0.33,0.998,0.002
+Mo Brooks,House, R, AL,5,1.0,0.334,0.998,0.002
+Larry Bucshon,House, R, IN,8,1.0,0.337,0.998,0.002
+Garret Graves,House, R, LA,6,1.0,0.338,0.998,0.002
+Jim Jordan,House, R, OH,4,1.0,0.336,0.998,0.002
+Todd Rokita,House, R, IN,4,1.0,0.341,0.998,0.002
+Warren Davidson,House, R, OH,8,1.0,0.345,0.998,0.002
+Rick Crawford ,House, R, AR,1,1.0,0.348,0.999,0.001
+Jim Banks,House, R, IN,3,1.0,0.35,0.999,0.001
+Chuck Fleischmann ,House, R, TN,3,1.0,0.352,0.999,0.001
+Kevin Cramer,House, R, ND,AL,1.0,0.357,0.999,0.001
+Neal P. Dunn,House, R, FL,2,1.0,0.356,0.999,0.001
+David Kustoff,House, R, TN,8,1.0,0.356,0.999,0.001
+Vicky Hartzler,House, R, MO,4,1.0,0.36,0.999,0.001
+Tom Marino,House, R, PA,10,1.0,0.359,0.999,0.001
+Alexander X. Mooney,House, R, WV,2,1.0,0.364,0.999,0.001
+Joyce Beatty,House, D, OH,3,0.045,-0.384,0.044,0.001
+Tom Cole,House, R, OK,4,1.0,0.374,0.999,0.001
+Jeff Duncan,House, R, SC,3,1.0,0.38,0.999,0.001
+Clay Higgins,House, R, LA,3,1.0,0.381,0.999,0.001
+Blaine Luetkemeyer,House, R, MO,3,1.0,0.39,0.999,0.001
+Marsha Blackburn,House, R, TN,7,1.0,0.393,0.999,0.001
+Paul A. Gosar,House, R, AZ,4,1.0,0.402,0.999,0.001
+Brett Guthrie,House, R, KY,2,1.0,0.399,0.999,0.001
+Luke Messer,House, R, IN,6,1.0,0.403,0.999,0.001
+Steven M. Palazzo,House, R, MS,4,1.0,0.412,0.999,0.001
+Scott DesJarlais,House, R, TN,4,1.0,0.412,0.999,0.001
+H. Morgan Griffith,House, R, VA,9,1.0,0.415,0.999,0.001
+David B. McKinley,House, R, WV,1,1.0,0.416,0.999,0.001
+Steve Scalise,House, R, LA,1,1.0,0.42,0.999,0.001
+Bill Shuster,House, R, PA,9,1.0,0.425,1.0,0.0
+Bill Johnson,House, R, OH,6,1.0,0.426,1.0,0.0
+Gary J. Palmer,House, R, AL,6,1.0,0.447,1.0,0.0
+Roger W. Marshall,House, R, KS,1,1.0,0.45,1.0,0.0
+Billy Long,House, R, MO,7,1.0,0.457,1.0,0.0
+John Shimkus,House, R, IL,15,1.0,0.462,1.0,0.0
+Liz Cheney,House, R, WY,AL,1.0,0.463,1.0,0.0
+Brian Babin,House, R, TX,36,1.0,0.468,1.0,0.0
+James Comer,House, R, KY,1,1.0,0.485,1.0,0.0
+Kevin Brady,House, R, TX,8,1.0,0.488,1.0,0.0
+Diane Black,House, R, TN,6,1.0,0.489,1.0,0.0
+Jodey C. Arrington,House, R, TX,19,1.0,0.49,1.0,0.0
+Evan H. Jenkins,House, R, WV,3,1.0,0.492,1.0,0.0
+Markwayne Mullin,House, R, OK,2,1.0,0.501,1.0,0.0
+Frank D. Lucas,House, R, OK,3,1.0,0.527,1.0,0.0
+Tom Graves,House, R, GA,14,1.0,0.529,1.0,0.0
+John Ratcliffe,House, R, TX,4,1.0,0.536,1.0,0.0
+Jason Smith,House, R, MO,8,1.0,0.544,1.0,0.0
+Adrian Smith,House, R, NE,3,1.0,0.549,1.0,0.0
+David P. Roe,House, R, TN,1,1.0,0.57,1.0,0.0
+Doug Collins,House, R, GA,9,1.0,0.585,1.0,0.0
+K. Michael Conaway,House, R, TX,11,1.0,0.587,1.0,0.0
+Harold Rogers,House, R, KY,5,1.0,0.621,1.0,0.0
+Robert B. Aderholt,House, R, AL,4,1.0,0.63,1.0,0.0
+Mac Thornberry,House, R, TX,13,1.0,0.63,1.0,0.0
+Karen Bass,House, D, CA,37,0.0,-0.761,0.0,0.0
+G. K. Butterfield,House, D, NC,1,0.048,-0.37,0.049,-0.001
+Ro Khanna,House, D, CA,17,0.0,-0.534,0.001,-0.001
+Cedric L. Richmond,House, D, LA,2,0.0,-0.524,0.002,-0.002
+Michael F. Doyle,House, D, PA,14,0.045,-0.359,0.049,-0.003
+C. A. Dutch Ruppersberger,House, D, MD,2,0.091,-0.246,0.095,-0.004
+Donald Norcross,House, D, NJ,1,0.091,-0.245,0.096,-0.005
+Susan A. Davis,House, D, CA,53,0.045,-0.349,0.051,-0.005
+Brendan F. Boyle,House, D, PA,13,0.045,-0.336,0.054,-0.008
+Lloyd Doggett,House, D, TX,35,0.045,-0.336,0.054,-0.008
+Grace Meng,House, D, NY,6,0.045,-0.33,0.055,-0.01
+Colleen Hanabusa,House, D, HI,1,0.045,-0.326,0.056,-0.011
+Bobby Scott ,House, D, VA,3,0.045,-0.317,0.059,-0.014
+Alan S. Lowenthal,House, D, CA,47,0.045,-0.316,0.059,-0.014
+Daniel Lipinski,House, D, IL,3,0.19,-0.153,0.206,-0.016
+José E. Serrano,House, D, NY,15,0.0,-0.889,0.016,-0.016
+Steny H. Hoyer,House, D, MD,5,0.045,-0.31,0.061,-0.016
+Betty McCollum,House, D, MN,4,0.045,-0.309,0.062,-0.016
+Adriano Espaillat,House, D, NY,13,0.0,-0.869,0.016,-0.016
+John P. Sarbanes,House, D, MD,3,0.045,-0.308,0.062,-0.016
+Barbara Lee,House, D, CA,13,0.0,-0.806,0.019,-0.019
+Danny K. Davis,House, D, IL,7,0.0,-0.782,0.021,-0.021
+Nydia M. Velázquez,House, D, NY,7,0.0,-0.765,0.022,-0.022
+Bradley Scott Schneider,House, D, IL,10,0.045,-0.294,0.067,-0.022
+John Lewis,House, D, GA,5,0.0,-0.731,0.023,-0.023
+Pramila Jayapal,House, D, WA,7,0.0,-0.699,0.023,-0.023
+Carolyn B. Maloney,House, D, NY,12,0.0,-0.698,0.023,-0.023
+Michael E. Capuano,House, D, MA,7,0.0,-0.722,0.023,-0.023
+Justin Amash,House, R, MI,3,0.864,0.094,0.887,-0.024
+Yvette D. Clarke,House, D, NY,9,0.0,-0.691,0.025,-0.025
+Mark Sanford,House, R, SC,1,0.909,0.131,0.935,-0.026
+Bennie G. Thompson,House, D, MS,2,0.048,-0.285,0.074,-0.027
+Maxine Waters,House, D, CA,43,0.0,-0.617,0.027,-0.027
+John Conyers Jr.,House, D, MI,13,0.0,-0.607,0.027,-0.027
+Jackie Speier,House, D, CA,14,0.0,-0.587,0.028,-0.028
+Julia Brownley,House, D, CA,26,0.091,-0.219,0.119,-0.028
+Andy Biggs,House, R, AZ,5,0.955,0.211,0.983,-0.029
+Keith Ellison,House, D, MN,5,0.0,-0.552,0.03,-0.03
+Alcee L. Hastings,House, D, FL,20,0.0,-0.621,0.031,-0.031
+Gwen Moore,House, D, WI,4,0.0,-0.522,0.032,-0.032
+Zoe Lofgren,House, D, CA,19,0.0,-0.514,0.032,-0.032
+Dina Titus,House, D, NV,1,0.0,-0.29,0.033,-0.033
+Mark DeSaulnier,House, D, CA,11,0.0,-0.488,0.034,-0.034
+Val Butler Demings,House, D, FL,10,0.045,-0.269,0.08,-0.034
+Diana DeGette,House, D, CO,1,0.0,-0.458,0.036,-0.036
+Jared Huffman,House, D, CA,2,0.0,-0.457,0.036,-0.036
+Janice D. Schakowsky,House, D, IL,9,0.0,-0.452,0.037,-0.037
+Debbie Dingell,House, D, MI,12,0.045,-0.263,0.083,-0.038
+Debbie Wasserman Schultz,House, D, FL,23,0.045,-0.261,0.084,-0.039
+Earl Blumenauer,House, D, OR,3,0.0,-0.482,0.04,-0.04
+Don Young,House, R, AK,AL,0.909,0.147,0.95,-0.041
+David N. Cicilline,House, D, RI,1,0.045,-0.256,0.088,-0.042
+Al Lawson Jr.,House, D, FL,5,0.045,-0.254,0.089,-0.044
+Grace F. Napolitano,House, D, CA,32,0.0,-0.389,0.044,-0.044
+John J. Duncan Jr.,House, R, TN,2,0.955,0.354,0.999,-0.044
+Matt Gaetz,House, R, FL,1,0.955,0.393,0.999,-0.045
+Louie Gohmert,House, R, TX,1,0.955,0.469,1.0,-0.045
+Judy Chu,House, D, CA,27,0.0,-0.376,0.046,-0.046
+Raúl R. Labrador,House, R, ID,1,0.952,0.383,0.999,-0.047
+Mark Pocan,House, D, WI,2,0.0,-0.368,0.047,-0.047
+Katherine M. Clark,House, D, MA,5,0.0,-0.436,0.049,-0.049
+Stephen F. Lynch,House, D, MA,8,0.0,-0.26,0.05,-0.05
+Jamie Raskin,House, D, MD,8,0.0,-0.337,0.053,-0.053
+Bonnie Watson Coleman,House, D, NJ,12,0.0,-0.332,0.055,-0.055
+Bill Foster,House, D, IL,11,0.045,-0.235,0.104,-0.058
+John B. Larson,House, D, CT,1,0.045,-0.231,0.107,-0.062
+James A. Himes,House, D, CT,4,0.045,-0.23,0.108,-0.063
+Suzanne Bonamici,House, D, OR,1,0.045,-0.228,0.11,-0.065
+Niki Tsongas,House, D, MA,3,0.045,-0.228,0.11,-0.065
+Raúl M. Grijalva,House, D, AZ,3,0.0,-0.299,0.065,-0.065
+Rick Larsen,House, D, WA,2,0.045,-0.221,0.117,-0.072
+Mark Takano,House, D, CA,41,0.0,-0.279,0.074,-0.074
+Raja Krishnamoorthi,House, D, IL,8,0.045,-0.217,0.121,-0.076
+A. Donald McEachin,House, D, VA,4,0.045,-0.216,0.123,-0.077
+Seth Moulton,House, D, MA,6,0.091,-0.179,0.173,-0.082
+Peter Welch,House, D, VT,AL,0.0,-0.264,0.082,-0.082
+Marcy Kaptur,House, D, OH,9,0.0,-0.222,0.083,-0.083
+Pete Aguilar,House, D, CA,31,0.045,-0.211,0.128,-0.083
+Richard E. Neal,House, D, MA,1,0.045,-0.207,0.133,-0.087
+Lois Frankel,House, D, FL,21,0.056,-0.195,0.144,-0.088
+Salud O. Carbajal,House, D, CA,24,0.045,-0.202,0.139,-0.094
+Nita M. Lowey,House, D, NY,17,0.045,-0.202,0.139,-0.094
+Joseph P. Kennedy III,House, D, MA,4,0.0,-0.242,0.098,-0.098
+Brian Higgins,House, D, NY,26,0.048,-0.196,0.15,-0.102
+Vicente Gonzalez,House, D, TX,15,0.091,-0.167,0.193,-0.102
+John K. Delaney,House, D, MD,6,0.095,-0.161,0.206,-0.111
+Jerry McNerney,House, D, CA,9,0.045,-0.186,0.162,-0.116
+André Carson,House, D, IN,7,0.0,-0.228,0.118,-0.118
+Sanford D. Bishop Jr.,House, D, GA,2,0.19,-0.117,0.31,-0.119
+Kathy Castor,House, D, FL,14,0.048,-0.182,0.173,-0.125
+Jared Polis,House, D, CO,2,0.0,-0.213,0.126,-0.126
+Thomas Massie,House, R, KY,4,0.864,0.359,0.999,-0.135
+James P. McGovern,House, D, MA,2,0.0,-0.194,0.15,-0.15
+Louise McIntosh Slaughter,House, D, NY,25,0.05,-0.164,0.2,-0.15
+Michelle Lujan Grisham,House, D, NM,1,0.045,-0.165,0.197,-0.151
+Suzan K. DelBene,House, D, WA,1,0.045,-0.163,0.201,-0.155
+Stephanie N. Murphy,House, D, FL,7,0.273,-0.073,0.433,-0.161
+Ed Perlmutter,House, D, CO,7,0.136,-0.12,0.297,-0.161
+Rosa L. DeLauro,House, D, CT,3,0.045,-0.155,0.216,-0.171
+Theodore E. Deutch,House, D, FL,22,0.0,-0.158,0.174,-0.174
+Christopher H. Smith,House, R, NJ,4,0.773,0.148,0.95,-0.177
+Ben Ray Luján,House, D, NM,3,0.045,-0.151,0.224,-0.179
+John A. Yarmuth,House, D, KY,3,0.045,-0.15,0.227,-0.181
+Chellie Pingree,House, D, ME,1,0.048,-0.148,0.234,-0.186
+Frank Pallone Jr.,House, D, NJ,6,0.0,-0.156,0.214,-0.214
+Emanuel Cleaver,House, D, MO,5,0.0,-0.135,0.215,-0.215
+Paul Tonko,House, D, NY,20,0.048,-0.135,0.264,-0.216
+Ami Bera,House, D, CA,7,0.091,-0.114,0.313,-0.222
+Denny Heck,House, D, WA,10,0.091,-0.114,0.313,-0.222
+Darren Soto,House, D, FL,9,0.045,-0.129,0.274,-0.229
+John Garamendi,House, D, CA,3,0.045,-0.126,0.282,-0.236
+Peter J. Visclosky,House, D, IN,1,0.045,-0.126,0.282,-0.236
+William R. Keating,House, D, MA,9,0.091,-0.107,0.332,-0.241
+Derek Kilmer,House, D, WA,6,0.045,-0.123,0.289,-0.244
+Lisa Blunt Rochester,House, D, DE,AL,0.045,-0.114,0.312,-0.267
+Walter B. Jones,House, R, NC,3,0.706,0.236,0.988,-0.282
+Thomas R. Suozzi,House, D, NY,3,0.182,-0.061,0.472,-0.29
+Kathleen M. Rice,House, D, NY,4,0.045,-0.096,0.363,-0.318
+Raul Ruiz,House, D, CA,36,0.045,-0.088,0.387,-0.342
+Kurt Schrader,House, D, OR,5,0.19,-0.042,0.535,-0.344
+Collin C. Peterson,House, D, MN,7,0.65,0.308,0.997,-0.347
+Tim Ryan,House, D, OH,13,0.091,-0.065,0.459,-0.368
+Sander M. Levin,House, D, MI,9,0.045,-0.078,0.418,-0.372
+Tom O'Halleran,House, D, AZ,1,0.318,0.011,0.7,-0.382
+James R. Langevin,House, D, RI,2,0.045,-0.071,0.44,-0.394
+Josh Gottheimer,House, D, NJ,5,0.273,0.011,0.7,-0.427
+Charlie Crist,House, D, FL,13,0.136,-0.032,0.566,-0.43
+Ruben Kihuen,House, D, NV,4,0.045,-0.049,0.511,-0.465
+Daniel T. Kildee,House, D, MI,5,0.05,-0.042,0.538,-0.488
+Elizabeth H. Esty,House, D, CT,5,0.045,-0.041,0.537,-0.491
+Ann M. Kuster,House, D, NH,2,0.091,-0.024,0.592,-0.501
+Joe Courtney,House, D, CT,2,0.045,-0.029,0.576,-0.53
+Jacky Rosen,House, D, NV,3,0.136,0.01,0.697,-0.56
+Peter A. DeFazio,House, D, OR,4,0.045,-0.001,0.664,-0.619
+Sean Patrick Maloney,House, D, NY,18,0.091,0.019,0.723,-0.632
+Cheri Bustos,House, D, IL,17,0.045,0.007,0.688,-0.643
+Carol Shea-Porter,House, D, NH,1,0.045,0.016,0.714,-0.669
+David Loebsack,House, D, IA,2,0.091,0.041,0.781,-0.69
+Ron Kind,House, D, WI,3,0.091,0.045,0.79,-0.699
+Matt Cartwright,House, D, PA,17,0.095,0.101,0.899,-0.804
+Timothy J. Walz,House, D, MN,1,0.136,0.149,0.951,-0.815
+Richard M. Nolan,House, D, MN,8,0.091,0.156,0.956,-0.865

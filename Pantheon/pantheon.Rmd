@@ -33,3 +33,4 @@ pantheon %>%
   add_markers(text = ~full_name, alpha = 0.2) %>%
   layout(geo = g)
 ```
+
