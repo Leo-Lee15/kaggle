@@ -1,8 +1,22 @@
+---
+title: "Favoritism"
+author: "Caio Lente"
+date: "2017-03-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Knitr options
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load tidyverse
 library(tidyverse)
 
 # Read data
 cts <- read_csv("CTS/Data/cts.csv")
+```
 
+```{r}
 # Get Trump Score for senators
 cts %>%
   filter(chamber == "Senate", party != "I") %>%
@@ -14,3 +28,6 @@ cts %>%
     xlab("Trump's Margin") +
     ylab("Trump Score") +
     theme_minimal()
+```
+
+What else can you find out in this dataset?
